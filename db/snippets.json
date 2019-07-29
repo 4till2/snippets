@@ -1,0 +1,194 @@
+[{
+    "id": 1,
+    "title": "Target visitors with URL",
+    "description": {
+        "what": "Targets visitors that have been on a url containing {KEYWORD}\"",
+        "when": "When targeting requires visitors of specific urls",
+        "how": "It retrieves visited pages from abtasty data in lo… storage and checks if the current url is a match"
+    },
+    "jsCode": "//JAVASCRIPT\n    const nbVisitedPages = 3; // equal or more than X pages\n    const keyword = 'bouclette|broderie'; // regex part\n    \n    const visitedPages = localStorage.getItem(\"ABTastyData\") && JSON.parse(localStorage.getItem(\"ABTastyData\")).VisitedPages;\n    return Array.isArray(visitedPages) && visitedPages.filter(function (el) {\n        return el.visite == visitedPages[visitedPages.length - 1].visite && (new RegExp('(.+)' + keyword + '.*')).test(el.url);\n    }).length >= nbVisitedPages;\",\n    \"cssCode\": \"body{ color:red }",
+    "meta": {
+        "tags": ["targeting", "url"],
+        "timeCreated": "Wed Oct 18 2017 12:41:34 GMT+0000 (UTC)",
+        "lastUpdated": "Wed Oct 18 2017 12:41:34 GMT+0000 (UTC)",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Tanguy"
+    }
+}, {
+    "id": 2,
+    "title": "Tracking without jquery in global",
+    "description": {
+        "what": ""
+    },
+    "jsCode": "//JAVASCRIPT\n\n// A) IF ELEMENT IS IN DOM WHEN CODE IS RUN\ndocument.querySelector('element').addEventListener('mousedown', function () {\n    ABTastyClickTracking('{TRACKING_NAME}', null, test_id);\n});\n\n// B) IF ELEMENT IS NOT IN DOM\nfunction onFunc(event, selector, callback, capture) {\n    let retel = window;\n    this.addEventListener(event, function (ev) {\n        return Array.from(document.querySelectorAll(selector)).filter(function(el) {\n            if (el.isSameNode(ev.target)) { retel = ev.target; return true; }\n            if (!!ev.target.closest(selector) && ev.target.closest(selector).isSameNode(el)) {retel = ev.target.closest(selector); return true;}\n            return false;\n        }).length === 1 && callback.call(retel, ev);\n    }, !!capture);\n    return this;\n}\n\nonFunc('mousedown', 'element', function () {\n    ABTastyClickTracking('{TRACKING_NAME}', null, test_id);\n}, false);",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["tracking", "vanilla js", "global"],
+        "timeCreated": "2019-06-11T21:08:02.496Z",
+        "lastUpdated": "2019-06-11T21:08:02.496Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 3,
+    "title": "Target minimum transaction value",
+    "description": {
+        "what": "Target a test to visitors with a cart transaction amount greater than or equal to 'MINIMUM'"
+    },
+    "jsCode": "//JAVASCRIPT\n\nconst MINIMUM = \"{ENTER_NUMBER}\";\n\nconst transactions = JSON.parse(localStorage.getItem('ABTastyData')).transactions;\nreturn typeof transaction !== 'undefined' && transactions.reduce(function (acc, cur) { return acc + cur.value; }, 0) >= MINIMUM;",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "transaction"],
+        "timeCreated": "2019-06-11T21:11:38.397Z",
+        "lastUpdated": "2019-06-11T21:11:38.397Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 4,
+    "title": "Target maximum transaction value",
+    "description": {
+        "what": "Target tests to users less than or equal to 'MAXIMUM'"
+    },
+    "jsCode": "//JAVASCRIPT\nconst MAXIMUM = \"{ENTER_NUMBER}\";\n\nconst transactions = JSON.parse(localStorage.getItem('ABTastyData')).transactions;\nreturn typeof transaction !== 'undefined' && transactions.reduce(function (acc, cur) { return acc + cur.value; }, 0) <= MAXIMUM;",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "transaction"],
+        "timeCreated": "2019-06-11T21:12:57.871Z",
+        "lastUpdated": "2019-06-11T21:12:57.871Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 5,
+    "title": "Parse ABTasty Cookie",
+    "description": {
+        "what": ""
+    },
+    "jsCode": "//JAVASCRIPT\nfunction getLisibleTastyCookie() {\n\tconst cookieBrut = ABTasty.accountSettings.storageMode === \"cookies\" ? document.cookie.split('ABTasty=')[1].split(';')[0] : localStorage.ABTasty;\n\tlet abCookieJsonString = decodeURIComponent(cookieBrut).replace(/&/g, '\",\"').replace(/=/g, '\":\"');\n\tconst humanTranslations = {'uid':'userId', 'fst':'firstSessionTimestamp', 'pst':'previousSessionTimestamp', 'cst':'currentSessionTimestamp', 'ns':'numberOfSessions', 'pvt':'pagesViewsTotal', 'pvis':'pagesViewsDuringSession', 'th':'testsList'};\n\tconst listTestsNames = ['testId', 'variationId', 'numberPagesTestViewed', 'numberPagesTestViewedSession', 'numberSessionsTestViewed', 'variationIsApply', 'firstTimeUserSawTest', 'lastTimeUserSawTest', 'isOneVisttorOneTest'];\n\tObject.keys(humanTranslations).forEach(function(e) {\n\t\tabCookieJsonString = abCookieJsonString.replace(e, humanTranslations[e]);\n\t});\n\tconst tastyCookieLisible = JSON.parse('{\"' + abCookieJsonString + '\"}');\n\ttastyCookieLisible.testsList = tastyCookieLisible.testsList.split('_').map(function (test) {\n\t\tconst testObject = {};\n\t\ttest.split('.').forEach(function(v, i) {\n\t\t\ttestObject[listTestsNames[i]] = v;\n\t\t});\n\t\treturn testObject;\n\t});\n\treturn tastyCookieLisible;\n}\n",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["cookie", "parse", "abtasty"],
+        "timeCreated": "2019-06-11T21:15:40.552Z",
+        "lastUpdated": "2019-06-11T21:15:40.552Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 6,
+    "title": "Targeting include / exclude local storage variable",
+    "description": {
+        "what": "Target users who have a local storage 'ITEM' : 'INCLUDE = true'. Target users who do not have local storage 'ITEM' : 'INCLUDE = false'."
+    },
+    "jsCode": "//JAVASCRIPT\nconst INCLUDE = '{true : false}';\nconst ITEM = 'SET_ITEM_NAME'\nreturn (localStorage.getItem(ITEM) == INCLUDE);",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "local storage"],
+        "timeCreated": "2019-06-11T21:25:59.220Z",
+        "lastUpdated": "2019-06-11T21:25:59.220Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 7,
+    "title": "One redirection per session",
+    "description": {
+        "what": "It checks if the user has been redirected using a split test previously during the current session. But it doesn't make a difference between this split test or any other potential live one. So, it also excludes from the targeting users who have been redirected by another split test."
+    },
+    "jsCode": "//JAVASCRIPT\nconst visites  = JSON.parse(localStorage.getItem('ABTastyData')).VisitedPages.reverse(),\n    visites_id  = visites.map(function (el) { return parseInt(el.visite); }),\n    different_id = visites_id.find(function (el, index, arr) { return el !== arr[0]; }),\n    nb_pages_viewed = typeof different_id === 'undefined' ? visites_id.length : visites_id.indexOf(different_id),\n    pages_viewed = visites.filter(function (el, index, arr) { return index < nb_pages_viewed && el.visite === arr[0].visite; });\n\nreturn pages_viewed.filter(function (el) { return el.url.indexOf('mrasn') !== -1; }).length === 0;",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "abtasty", "redirection"],
+        "timeCreated": "2019-06-11T21:30:25.977Z",
+        "lastUpdated": "2019-06-11T21:30:25.977Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 8,
+    "title": "Target based on previous visited page",
+    "description": {
+        "what": ""
+    },
+    "jsCode": "//JAVASCRIPT\nconst TARGETED_URL = \"{ADD_TARGETED_URL}\";\n\nconst visites        = JSON.parse(localStorage.getItem('ABTastyData')).VisitedPages.reverse(),\n    visites_id        = visites.map(function (el) { return parseInt(el.visite); }),\n    different_id    = visites_id.find(function (el, index, arr) { return el !== arr[0]; }),\n    nb_pages_viewed    = typeof different_id === 'undefined' ? visites_id.length : visites_id.indexOf(different_id),\n    pages_viewed    = visites.filter(function (el, index, arr) { return index < nb_pages_viewed && el.visite === arr[0].visite; });\n\nreturn pages_viewed.map(function (el) { return el.url }).indexOf(TARGETEDURL) !== -1;",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "url", "visited"],
+        "timeCreated": "2019-06-11T21:35:39.060Z",
+        "lastUpdated": "2019-06-11T21:35:39.060Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 9,
+    "title": "Include / Exclude device",
+    "description": {
+        "what": "Target a specific device"
+    },
+    "jsCode": "//JAVASCRIPT\n\n//Exclude iPhone :\n`return navigator.userAgent.indexOf('iPhone') < 0;`\n\n//Include iPhone :\n`return navigator.userAgent.indexOf('iPhone') > -1;`\n\n//Exclude iPad :\n`return navigator.userAgent.indexOf('iPad') < 0;`\n\n//Include iPad :\n`return navigator.userAgent.indexOf('iPad') > -1;`\n\n//Exclude iOS :\n`return navigator.userAgent.indexOf('iPhone') < 0 && navigator.userAgent.indexOf('iPad') < 0;`\n\n//Include iOS :\n`return navigator.userAgent.indexOf('iPhone') > -1 || navigator.userAgent.indexOf('iPad') > -1;`\n\n//Exclude Android :\n`return navigator.userAgent.indexOf('Android') < 0;`\n\n//Include Android :\n`return navigator.userAgent.indexOf('Android') > -1;`",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "iphone", "android", "include", "exclude", "ios"],
+        "timeCreated": "2019-06-11T21:42:01.159Z",
+        "lastUpdated": "2019-06-11T21:42:01.159Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 10,
+    "title": "Do something after X seconds on page and X seconds of inactivity",
+    "description": {
+        "what": "Do something when a users has spent at least XX seconds on the page AND was inactive for XX seconds."
+    },
+    "jsCode": "//JAVASCRIPT\nfunction popinTimer(){\n    const TIMEOUT = \"{TIME_OF_INACTIVITY}\";\n    var TIMER = 0;\n    const MINTIME = \"{MIN_TIME_ON_PAGE}\"\n    var TIMEONPAGE = 0;\n    \n    let totalTime = setInterval(function(){\n        TIMEONPAGE += 1;\n    }, 1000)\n    \n    let inactivityCounter = setInterval(function(){\n        TIMER += 1;\n        if (TIMER >= TIMEOUT && TIMEONPAGE >= MINTIME){\n            \n            //do action here!!!\n            \n            clearInterval(inactivityCounter);\n            clearInterval(totalTime);\n            return;\n        }\n    }, 1000);\n    \n    $('body').mousemove(function(){\n        TIMER = 0;\n    })\n}",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["time"],
+        "timeCreated": "2019-06-11T21:47:24.583Z",
+        "lastUpdated": "2019-06-11T21:47:24.583Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 11,
+    "title": "Exclude landscape format screens",
+    "description": {
+        "what": ""
+    },
+    "jsCode": "//JAVASCRIPT\nreturn innerWidth < innerHeight;",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting", "exclude"],
+        "timeCreated": "2019-06-11T22:13:38.044Z",
+        "lastUpdated": "2019-06-11T22:13:38.044Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}, {
+    "id": 12,
+    "title": "Target user X times",
+    "description": {
+        "what": "Target a user for campaign x times"
+    },
+    "jsCode": "//JAVASCRIPT\nconst CAP = \"{MAX_TIMES_TO_SHOW_CAMPAIGN}\"\n\nlet display = localStorage.getItem(\"testDisplayed\"),\n    number = 0;\n\nif (display === null) {\n    number++;\n    number = number.toString();\n    localStorage.setItem(\"testDisplayed\", number);\n    localStorage.setItem(\"testTimestamp\", Date.now());\n    return true;\n} else {\n    number = parseInt(display);\n    timestamp = parseInte(localStorage.getItem(\"testTimestamp\"));\n    if (number < CAP) {\n        if (timestamp + 86400000 < Date.now()) {\n            number++;\n            number = number.toString();\n            localStorage.setItem(\"popinDisplayed\", number);\n            localStorage.setItem(\"popinTimestamp\", Date.now());\n            return true;\n        } else {\n            return false;\n        }\n    } else {\n        return false;\n    }\n}",
+    "cssCode": "/* CSS */",
+    "meta": {
+        "tags": ["targeting"],
+        "timeCreated": "2019-06-11T22:38:44.205Z",
+        "lastUpdated": "2019-06-11T22:38:44.205Z",
+        "upvotes": 0,
+        "downvotes": 0,
+        "author": "Guest"
+    }
+}]
