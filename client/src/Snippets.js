@@ -7,21 +7,22 @@ import UpdateSnippet from './UpdateSnippet';
 import EditSnippet from './EditSnippet';
 
 export default class Snippets extends Component {
-    state = {
-        data: [],
-        id: 0,
-        title: null,
-        description: null,
-        tags: [],
-        jscode: null,
-        csscode: null,
-        placement: null,
-        date: new Date(),
-        author: null, 
-        intervalIsSet: false,
-        editMode: false
-    };
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: [],
+            id: 0,
+            title: null,
+            description: null,
+            tags: [],
+            jscode: null,
+            csscode: null,
+            placement: null,
+            date: new Date(),
+            author: null, 
+            intervalIsSet: false,
+        };
+    }
     // when component mounts, first thing it does is fetch all existing data in our db
     // then we incorporate a polling logic so that we can easily see if our db has
     // changed and implement those changes into our UI
@@ -56,7 +57,6 @@ export default class Snippets extends Component {
     };
 
     render() {
-        if (!this.state.editMode) { 
             return (
                 <div className="snippets">
                     <h1>Snippets</h1>
@@ -70,14 +70,6 @@ export default class Snippets extends Component {
                     <NewSnippet currentIds={this.state.data.map((data) => data.id)}/>
                 </div>
             )
-        }else{  
-            return (
-                <div className="editSnippet">
-                    <h1>Edit snippet</h1>
-                    <EditSnippet/>
-                </div>
-            )
-        }
     }
 }
 

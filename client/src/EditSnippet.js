@@ -5,7 +5,7 @@ export default class EditSnippet extends Component {
         return (
             <div>
                 <h6>Edit snippet</h6>
-                <button>Edit Snippet</button>
+                <button onClick={this.props.edit}>Edit Snippet</button>
             </div>
         )
     }

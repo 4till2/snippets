@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Client from './Client';
+import Client from './Client'
 
 export default class NewSnippet extends Component {
     state = {
@@ -10,7 +10,7 @@ export default class NewSnippet extends Component {
         jscode: null,
         csscode: null,
         placement: null,
-        date: new Date(),
+        date: null,
         author: null, 
       };
       
@@ -20,7 +20,7 @@ export default class NewSnippet extends Component {
         while (currentIds.includes(idToBeAdded)) {
           ++idToBeAdded;
         }
-    
+
         Client.addSnippet({
             id: idToBeAdded,
             title: snip.title,
@@ -29,7 +29,7 @@ export default class NewSnippet extends Component {
             jscode: snip.jscode,
             csscode: snip.csscode,
             placement: snip.placement,
-            date: snip.date,
+            date: new Date(),
             author: snip.author 
         });
     }

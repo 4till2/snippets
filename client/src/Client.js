@@ -25,6 +25,31 @@ import axios from 'axios'
     })
   };
 
+      // update method that uses our backend api
+    // to overwrite existing data base information
+   let updateSnippet = (snip, idToUpdate) => {
+      axios.post('/api/updateData', {
+          objid: snip._id,
+          id: snip.id,
+          title: snip.title,
+          description: snip.description,
+          tags: snip.tags,
+          jscode: snip.jscode,
+          csscode: snip.csscode,
+          placement: snip.placement,
+          date: snip.date,
+          author: snip.author
+      })
+      .then(
+        (response => {
+          console.log(response)
+        })
+      )
+      .catch(error => {
+        console.log(error.response)
+      })
+  };
+
   // delete method that uses our backend api
   // to remove existing database information
   let deleteSnippet = (id) => {
@@ -58,6 +83,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {addSnippet, deleteSnippet };
+  const Client = {addSnippet, updateSnippet, deleteSnippet };
   export default Client;
   
