@@ -33,8 +33,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// this is our get method
-// this method fetches all available data in our database
+/* SNIPPETS */  
+/*--------------------------------------------------------------- */
 router.get('/getSnippets', (req, res) => {
   Snippet.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
@@ -42,8 +42,6 @@ router.get('/getSnippets', (req, res) => {
   });
 });
 
-// this is our update method
-// this method overwrites existing data in our database
 router.post('/updateSnippet', (req, res) => { console.log('updating....')
   const { 
     objid,    
@@ -82,8 +80,6 @@ router.post('/updateSnippet', (req, res) => { console.log('updating....')
     });
 });
 
-// this is our delete method
-// this method removes existing data in our database
 router.delete('/deleteSnippet', (req, res) => {
   const { id } = req.body;
   Snippet.findByIdAndDelete(id, (err) => {
@@ -92,8 +88,6 @@ router.delete('/deleteSnippet', (req, res) => {
   });
 });
 
-// this is our create method
-// this method adds new data in our database
 router.post('/putSnippet', (req, res) => {
   let data = new Snippet();
   
@@ -128,6 +122,27 @@ router.post('/putSnippet', (req, res) => {
     return res.json({ success: true });
   });
 });
+/*--------------------------------------------------------------- */
+/* END SNIPPET */
+
+/* TAGS */  
+/*--------------------------------------------------------------- */
+router.get('/getTags', (req, res) => {
+  Tag.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.delete('/deleteTag', (req, res) => {
+  const { id } = req.body;
+  Snippet.findByIdAndDelete(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+/*--------------------------------------------------------------- */
+/* END TAGS */
 
 app.get('/', function(req, res) {
   res.sendFile('index.html', {root: './client/public/'});

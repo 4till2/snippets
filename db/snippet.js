@@ -7,7 +7,7 @@ const SnippetSchema = new Schema(
     id: Number,
     title: String,
     description: String,
-    tags: String,
+    tags: Array,
     jscode: String,
     csscode: String,
     placement: String, 

@@ -3,11 +3,9 @@ const Schema = mongoose.Schema;
 
 const TagsSchema = new Schema(
     {
-      id: Number,
-      title: String,
-      author: String
-    },
-    {timestamps: true}
+      value: String,
+      label: String,
+    }
 );
 
 module.exports = mongoose.model("Tag", TagsSchema);

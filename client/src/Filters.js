@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Search from './Search'
-import Tags from './Tags'
 
 export default class Filters extends Component {
     render() {
@@ -8,7 +7,6 @@ export default class Filters extends Component {
             <div>
                 <p>Filters</p>
                 <Search/>
-                <Tags/>
             </div>
         )
     }

@@ -1,24 +1,32 @@
 import React, { Component } from 'react'
 import Client from './Client'
-
+import Editor from './Editor'
+import TagsInput from './TagsInput'
 export default class UpdateSnippet extends Component {
-    state = {
-        objid: this.props.data._id,
-        id: this.props.data.id,
-        title: this.props.data.title,
-        description: this.props.data.description,
-        tags: this.props.data.tags,
-        jscode: this.props.data.jscode,
-        csscode: this.props.data.csscode,
-        placement: this.props.data.placement,
-        author: this.props.data.author, 
-      };
-    
-    // in the front end, we use the id key of our data object
-    // in order to identify which we want to Update or delete.
-    // for our back end, we use the object id assigned by MongoDB to modify
-    // data base entries
-      submit = (snip) => {
+    constructor(props){
+        super(props)
+        this.state = {
+            objid: this.props.data._id,
+            id: this.props.data.id,
+            title: this.props.data.title,
+            description: this.props.data.description,
+            tags: this.props.data.tags,
+            jscode: this.props.data.jscode,
+            csscode: this.props.data.csscode,
+            placement: this.props.data.placement,
+            author: this.props.data.author, 
+        };
+        this.updateCode = this.updateCode.bind(this);
+        this.updateTags = this.updateTags.bind(this);
+
+    }
+    updateCode = (code, update) => {
+        this.setState({[code] : update})
+    }
+    updateTags = (tags) => {
+        this.setState({tags: tags})
+    }
+    submit = (snip) => {
         Client.updateSnippet({
             objid: snip.objid,
             title: snip.title,
@@ -48,24 +56,21 @@ export default class UpdateSnippet extends Component {
                     defaultValue={this.props.data.description} 
                     style={{ width: '200px' }}
                 /> 
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ tags: e.target.value })}
-                    defaultValue={this.props.data.tags} 
-                    style={{ width: '200px' }}
-                /> 
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ jscode: e.target.value })}
-                    defaultValue={this.props.data.jscode} 
-                    style={{ width: '200px' }}
-                />
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ csscode: e.target.value })}
-                    defaultValue={this.props.data.csscode}
-                    style={{ width: '200px' }}
-                />
+                <TagsInput update={this.updateTags} tags={this.state.tags}/>
+                <div className="editors" style={{ width:'100%', display: 'inline-flex'}}>
+                    <Editor 
+                        update={this.updateCode}
+                        mode='javascript'
+                        readOnly={false}
+                        value={this.props.data.jscode}
+                    />
+                    <Editor 
+                        update={this.updateCode}
+                        mode='css'
+                        readOnly={false}
+                        value={this.props.data.csscode}
+                    />
+                </div>
                 <input
                     type="text"
                     onChange={(e) => this.setState({ placement: e.target.value })}
@@ -80,6 +85,9 @@ export default class UpdateSnippet extends Component {
                 />                   
                 <button onClick={() => this.submit(this.state)}>
                     UPDATE
+                </button>
+                <button onClick={() => this.props.edit()}>
+                    CANCEL
                 </button>
         </div>
         )

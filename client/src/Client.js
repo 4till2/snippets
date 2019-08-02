@@ -2,6 +2,8 @@ import axios from 'axios'
 /* eslint-disable no-undef */
 
 
+  /* SNIPPITS */  
+  /*--------------------------------------------------------------- */
   let getAllSnippets = async () => {
     try {
       const data = await new Promise(function (resolve, reject) {
@@ -76,6 +78,41 @@ import axios from 'axios'
         console.log(error.response)
     });
   };
+  /*--------------------------------------------------------------- */
+  /* END SNIPPETS */
+
+  
+  /* TAGS    
+  /*--------------------------------------------------------------- */
+  let getAllTags = async () => {
+    try {
+      const data = await new Promise(function (resolve, reject) {
+        resolve(axios.get('/api/getTags'));
+      });
+      return (data.data);
+    }
+    catch (err) {
+      return (err);
+    }
+  }
+
+  let deleteTag = (id) => {
+    axios.delete('/api/deleteTag', {
+        data: {
+            id: id,
+        },
+    })
+    .then(
+    (response => {
+        console.log(response)
+    })
+    )
+    .catch(error => {
+        console.log(error.response)
+    });
+  };
+  /*--------------------------------------------------------------- */
+  /* END TAGS */
 
   function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -92,6 +129,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet };
+  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag };
   export default Client;
   

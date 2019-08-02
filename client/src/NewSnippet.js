@@ -1,36 +1,51 @@
 import React, { Component } from 'react'
 import Client from './Client'
+import Editor from './Editor'
+import TagsInput from './TagsInput'
 
 export default class NewSnippet extends Component {
-    state = {
-        id: 0,
-        title: null,
-        description: null,
-        tags: [],
-        jscode: null,
-        csscode: null,
-        placement: null,
-        author: null, 
-      };
-      
-      submit = (snip) => {
-        let currentIds = this.props.currentIds;
-        let idToBeAdded = 0;
-        while (currentIds.includes(idToBeAdded)) {
-          ++idToBeAdded;
-        }
-
-        Client.addSnippet({
-            id: idToBeAdded,
-            title: snip.title,
-            description: snip.description,
-            tags: snip.tags,
-            jscode: snip.jscode,
-            csscode: snip.csscode,
-            placement: snip.placement,
-            author: snip.author 
-        });
+    constructor(props){
+        super(props)
+        this.state = {
+            id: 0,
+            title: null,
+            description: null,
+            tags: [],
+            jscode: null,
+            csscode: null,
+            placement: null,
+            author: null, 
+        };
+        this.updateCode = this.updateCode.bind(this);
+        this.updateTags = this.updateTags.bind(this);
     }
+    
+    updateCode = (code, update) => {
+        this.setState({[code] : update})
+    }
+
+    updateTags = (tags) => {
+        this.setState({tags: tags})
+    }
+
+    submit = (snip) => {
+    let currentIds = this.props.currentIds;
+    let idToBeAdded = 0;
+    while (currentIds.includes(idToBeAdded)) {
+        ++idToBeAdded;
+    }
+
+    Client.addSnippet({
+        id: idToBeAdded,
+        title: snip.title,
+        description: snip.description,
+        tags: snip.tags,
+        jscode: snip.jscode,
+        csscode: snip.csscode,
+        placement: snip.placement,
+        author: snip.author 
+    });
+}
 
     render() {
         return (
@@ -48,24 +63,21 @@ export default class NewSnippet extends Component {
                     placeholder="Description"
                     style={{ width: '200px' }}
                 /> 
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ tags: e.target.value })}
-                    placeholder="Tags"
-                    style={{ width: '200px' }}
-                /> 
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ jscode: e.target.value })}
-                    placeholder="Javascript Code"
-                    style={{ width: '200px' }}
-                />
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ csscode: e.target.value })}
-                    placeholder="Css Code"
-                    style={{ width: '200px' }}
-                />
+                <TagsInput update={this.updateTags}/>
+                <div className="editors" style={{ width:'100%', display: 'inline-flex'}}>
+                    <Editor 
+                        update={this.updateCode}
+                        mode='javascript'
+                        readOnly={false}
+                        value=''
+                    />
+                    <Editor 
+                        update={this.updateCode}
+                        mode='css'
+                        readOnly={false}
+                        value=''
+                    />
+                </div>
                 <input
                     type="text"
                     onChange={(e) => this.setState({ placement: e.target.value })}
