@@ -2,16 +2,16 @@ import axios from 'axios'
 /* eslint-disable no-undef */
 
 
-  let getAllSnippets = () => {
-    return new Promise(function(resolve, reject){
-    resolve(axios.get('/api/getSnippet'))
-  })
-    .then(data => {
-        return(data)
-    })
-    .catch(err => {
-      return(err)
-    })
+  let getAllSnippets = async () => {
+    try {
+      const data = await new Promise(function (resolve, reject) {
+        resolve(axios.get('/api/getSnippets'));
+      });
+      return (data);
+    }
+    catch (err) {
+      return (err);
+    }
   }
   // our put method that uses our backend api
   // to create new query into our data base

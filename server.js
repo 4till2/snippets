@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 
 // this is our get method
 // this method fetches all available data in our database
-router.get('/getSnippet', (req, res) => {
+router.get('/getSnippets', (req, res) => {
   Snippet.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
