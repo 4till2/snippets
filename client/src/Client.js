@@ -1,6 +1,18 @@
 import axios from 'axios'
 /* eslint-disable no-undef */
 
+
+  let getAllData = () => {
+    return new Promise(function(resolve, reject){
+    resolve(axios.get('/api/getData'))
+  })
+    .then(data => {
+        return(data)
+    })
+    .catch(err => {
+      return(err)
+    })
+  }
   // our put method that uses our backend api
   // to create new query into our data base
   let addSnippet = (snip) => {
@@ -29,8 +41,7 @@ import axios from 'axios'
     // to overwrite existing data base information
    let updateSnippet = (snip, idToUpdate) => {
       axios.post('/api/updateData', {
-          objid: snip._id,
-          id: snip.id,
+          objid: snip.objid,
           title: snip.title,
           description: snip.description,
           tags: snip.tags,
@@ -83,6 +94,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {addSnippet, updateSnippet, deleteSnippet };
+  const Client = {getAllData, addSnippet, updateSnippet, deleteSnippet };
   export default Client;
   

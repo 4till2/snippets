@@ -3,11 +3,11 @@ import Client from './Client'
 
 export default class UpdateSnippet extends Component {
     state = {
-        objectId: this.props.data._id,
+        objid: this.props.data._id,
         id: this.props.data.id,
-        title: this.props.data.id,
+        title: this.props.data.title,
         description: this.props.data.description,
-        tags: this.props.data.description,
+        tags: this.props.data.tags,
         jscode: this.props.data.jscode,
         csscode: this.props.data.csscode,
         placement: this.props.data.placement,
@@ -15,11 +15,13 @@ export default class UpdateSnippet extends Component {
         author: this.props.data.author, 
       };
     
-
+    // in the front end, we use the id key of our data object
+    // in order to identify which we want to Update or delete.
+    // for our back end, we use the object id assigned by MongoDB to modify
+    // data base entries
       submit = (snip) => {
-
         Client.updateSnippet({
-            id: snip.id,
+            objid: snip.objid,
             title: snip.title,
             description: snip.description,
             tags: snip.tags,
@@ -28,9 +30,7 @@ export default class UpdateSnippet extends Component {
             placement: snip.placement,
             date: new Date(),
             author: snip.author 
-        },
-            snip.objectID
-        );
+        });
         this.props.edit()
     }
 

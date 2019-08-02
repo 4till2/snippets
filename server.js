@@ -45,12 +45,44 @@ router.get('/getData', (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
-  const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
+router.post('/updateData', (req, res) => { console.log('updating....')
+  const { 
+    objid,    
+    title,
+    description,
+    tags,
+    jscode,
+    csscode,
+    placement,
+    date,
+    author } = req.body;
+
+  if ((!objid && objid !== 0) || !title || !description || !tags || (!jscode && !csscode) || !date || !author) {
+    console.log('Invalid Inputs')
+    return res.json({
+      success: false,
+      error: 'INVALID INPUTS',
+    });
+  }
+
+  Data.update(
+    {_id: objid},
+    {
+      $set: {
+        title : title,
+        description : description,
+        tags : tags,
+        jscode : jscode,
+        csscode : csscode,
+        placement : placement,
+        date : date,
+        author : author
+      }
+    },
+    (err) => {
+      if (err) return res.send(err);
+      return res.json({ success: true });
+    });
 });
 
 // this is our delete method

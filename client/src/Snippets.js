@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Snippet from './Snippet'
 import NewSnippet from './NewSnippet'
-import DeleteSnippet from './DeleteSnippet'
-import UpdateSnippet from './UpdateSnippet';
-import EditSnippet from './EditSnippet';
+import Client from './Client'
 
 export default class Snippets extends Component {
     constructor(props) {
@@ -43,16 +40,11 @@ export default class Snippets extends Component {
         }
     }
 
-    // in the front end, we use the id key of our data object
-    // in order to identify which we want to Update or delete.
-    // for our back end, we use the object id assigned by MongoDB to modify
-    // data base entries
-
     // get method that uses our backend api to
     // fetch data from our data base
     getDataFromDb = () => {
-        fetch('/api/getData')
-        .then((data) => data.json())
+        Client.getAllData()
+        .then((data) => data.data)
         .then((res) => this.setState({ data: res.data }));
     };
 
