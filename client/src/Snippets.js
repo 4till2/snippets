@@ -15,7 +15,6 @@ export default class Snippets extends Component {
             jscode: null,
             csscode: null,
             placement: null,
-            date: new Date(),
             author: null, 
             intervalIsSet: false,
         };
@@ -43,7 +42,7 @@ export default class Snippets extends Component {
     // get method that uses our backend api to
     // fetch data from our data base
     getDataFromDb = () => {
-        Client.getAllData()
+        Client.getAllSnippets()
         .then((data) => data.data)
         .then((res) => this.setState({ data: res.data }));
     };

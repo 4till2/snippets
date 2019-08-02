@@ -11,7 +11,6 @@ export default class UpdateSnippet extends Component {
         jscode: this.props.data.jscode,
         csscode: this.props.data.csscode,
         placement: this.props.data.placement,
-        date: this.props.data.date,
         author: this.props.data.author, 
       };
     
@@ -28,7 +27,6 @@ export default class UpdateSnippet extends Component {
             jscode: snip.jscode,
             csscode: snip.csscode,
             placement: snip.placement,
-            date: new Date(),
             author: snip.author 
         });
         this.props.edit()

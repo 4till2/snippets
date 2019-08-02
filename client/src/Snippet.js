@@ -35,7 +35,7 @@ export default class Snippet extends Component {
                     <span style={{ color: 'gray' }}> csscode: </span> {this.props.data.csscode} <br />
                     <span style={{ color: 'gray' }}> placement: </span> {this.props.data.placement} <br />
                     <span style={{ color: 'gray' }}> author: </span> {this.props.data.author} <br />
-                    <span style={{ color: 'gray' }}> date: </span> {this.props.data.date.toString()} <br />
+                    <span style={{ color: 'gray' }}> date: </span> {this.props.data.updatedAt.toString()} <br />
                     </li>
                     {/* <Header/>
                     <Code/>

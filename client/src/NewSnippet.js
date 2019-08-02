@@ -10,7 +10,6 @@ export default class NewSnippet extends Component {
         jscode: null,
         csscode: null,
         placement: null,
-        date: null,
         author: null, 
       };
       
@@ -29,7 +28,6 @@ export default class NewSnippet extends Component {
             jscode: snip.jscode,
             csscode: snip.csscode,
             placement: snip.placement,
-            date: new Date(),
             author: snip.author 
         });
     }

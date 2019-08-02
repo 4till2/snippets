@@ -1,9 +1,8 @@
-// /backend/data.js
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// this will be our data base's data structure 
-const DataSchema = new Schema(
+const SnippetSchema = new Schema(
   {
     id: Number,
     title: String,
@@ -12,11 +11,9 @@ const DataSchema = new Schema(
     jscode: String,
     csscode: String,
     placement: String, 
-    date: Date,
     author: String 
   },
   { timestamps: true }
 );
 
-// export the new Schema so we could modify it using Node.js
-module.exports = mongoose.model("Data", DataSchema);
+module.exports = mongoose.model("Snippet", SnippetSchema);

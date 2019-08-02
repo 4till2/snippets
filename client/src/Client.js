@@ -2,9 +2,9 @@ import axios from 'axios'
 /* eslint-disable no-undef */
 
 
-  let getAllData = () => {
+  let getAllSnippets = () => {
     return new Promise(function(resolve, reject){
-    resolve(axios.get('/api/getData'))
+    resolve(axios.get('/api/getSnippet'))
   })
     .then(data => {
         return(data)
@@ -16,7 +16,7 @@ import axios from 'axios'
   // our put method that uses our backend api
   // to create new query into our data base
   let addSnippet = (snip) => {
-    axios.post('/api/putData', {
+    axios.post('/api/putSnippet', {
         id: snip.id,
         title: snip.title,
         description: snip.description,
@@ -24,7 +24,6 @@ import axios from 'axios'
         jscode: snip.jscode,
         csscode: snip.csscode,
         placement: snip.placement,
-        date: snip.date,
         author: snip.author 
     })
     .then(
@@ -40,7 +39,7 @@ import axios from 'axios'
       // update method that uses our backend api
     // to overwrite existing data base information
    let updateSnippet = (snip, idToUpdate) => {
-      axios.post('/api/updateData', {
+      axios.post('/api/updateSnippet', {
           objid: snip.objid,
           title: snip.title,
           description: snip.description,
@@ -48,7 +47,6 @@ import axios from 'axios'
           jscode: snip.jscode,
           csscode: snip.csscode,
           placement: snip.placement,
-          date: snip.date,
           author: snip.author
       })
       .then(
@@ -64,7 +62,7 @@ import axios from 'axios'
   // delete method that uses our backend api
   // to remove existing database information
   let deleteSnippet = (id) => {
-    axios.delete('/api/deleteData', {
+    axios.delete('/api/deleteSnippet', {
         data: {
             id: id,
         },
@@ -94,6 +92,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {getAllData, addSnippet, updateSnippet, deleteSnippet };
+  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet };
   export default Client;
   
