@@ -1,0 +1,14 @@
+.new-snippet{
+    padding: '10px';
+    width: 100%;
+    margin: 0 auto;
+}
+
+input {
+    width: 100% !important;
+    height: 20px;
+    padding: 10px;
+}
+button{
+    margin: 20px;
+}

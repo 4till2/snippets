@@ -20,15 +20,23 @@ export default class TagsInput extends Component {
 
     render() {
         return (
-            <Select
-            name="inputTags"
-            isMulti
-            className="basic-multi-select"
-            classNamePrefix="select"
-            defaultValue={this.props.tags || ''}
-            options={this.state.data}
-            onChange={(e) => this.props.update(e)}
-            />
+            <div className="tags" style={style}>
+                <Select
+                style={{zIndex: '5', width: '100%', height: '5px'}}
+                name="inputTags"
+                isMulti
+                className="basic-multi-select"
+                classNamePrefix="select"
+                defaultValue={this.props.tags || ''}
+                options={this.state.data}
+                onChange={(e) => this.props.update(e)}
+                isDisabled={this.props.readOnly || false}
+                />
+            </div>
         );
     }
+}
+
+const style = {
+    zIndex: 5,
 }

@@ -1,7 +1,10 @@
+import './NewSnippet.css'
 import React, { Component } from 'react'
 import Client from './Client'
 import Editor from './Editor'
 import TagsInput from './TagsInput'
+import Placement from './Placement'
+import { Form, Col, Button } from 'react-bootstrap'
 
 export default class NewSnippet extends Component {
     constructor(props){
@@ -44,33 +47,52 @@ export default class NewSnippet extends Component {
         csscode: snip.csscode,
         placement: snip.placement,
         author: snip.author 
-    });
+    })
+    .then(
+        (response => {
+          if (response.data.success === true){
+              console.log("Success");
+              this.props.onSubmit()
+          }
+          else{
+              console.log("Failure")
+          }
+        })
+      )
+      .catch(error => {
+        console.log(error)
+      })
 }
 
     render() {
         return (
-            <div className="newSnippet" style={{ padding: '10px' }}>
+            <div className="new-snippet">
                 <h2>NewSnippet</h2>
+                <span>Title: </span>
                 <input
                     type="text"
                     onChange={(e) => this.setState({ title: e.target.value })}
-                    placeholder="Title"
+                    placeholder="Short and to the point"
                     style={{ width: '200px' }}
                 />
+                <span>Description: </span>
                 <input
                     type="text"
                     onChange={(e) => this.setState({ description: e.target.value })}
-                    placeholder="Description"
+                    placeholder="What do we need to know about this snippet? When / How do we use it? Be descriptive."
                     style={{ width: '200px' }}
                 /> 
+                <span>Tags: </span>
                 <TagsInput update={this.updateTags}/>
                 <div className="editors" style={{ width:'100%', display: 'inline-flex'}}>
+                    <span>JS: </span>
                     <Editor 
                         update={this.updateCode}
                         mode='javascript'
                         readOnly={false}
                         value=''
                     />
+                    <span>CSS:</span>
                     <Editor 
                         update={this.updateCode}
                         mode='css'
@@ -78,16 +100,13 @@ export default class NewSnippet extends Component {
                         value=''
                     />
                 </div>
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ placement: e.target.value })}
-                    placeholder="Placement"
-                    style={{ width: '200px' }}
-                />
+                <span>Placement: </span>
+                <Placement handleChange={(e) => this.setState({ placement: e })} />
+                <span>Author: </span>
                 <input
                     type="text"
                     onChange={(e) => this.setState({ author: e.target.value })}
-                    placeholder="Author"
+                    placeholder="Who are you?"
                     style={{ width: '200px' }}
                 />                   
                 <button onClick={() => this.submit(this.state)}>

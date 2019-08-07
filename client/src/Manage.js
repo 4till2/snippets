@@ -1,19 +1,26 @@
 import React, { Component } from 'react'
 import EditSnippet from './EditSnippet'
-import DeleteSnippet from './DeleteSnippet';
-
+import Client from './Client'
 export default class Manage extends Component {
     constructor(props){
         super(props);
     }
-
+    confirmDelete(){
+        var confirm =   prompt("Enter 'DELETE' to delete!");
+        if (confirm == 'DELETE'){
+             Client.deleteSnippet(this.props.data._id)
+        }
+     }
     render() {
         return (   
-            <div className = "manage" >
-                <h5> Manage </h5>
-                <DeleteSnippet databaseId={this.props.data._id}/>
-                <EditSnippet edit={this.props.edit} />
+            <div className = "manage" style={style}>
+                <button onClick={() => this.confirmDelete() }>DELETE</button>
+                <button onClick={this.props.edit}>EDIT</button>
             </div>
         )
     }
+}
+
+const style = {
+    display: 'inline-flex'
 }

@@ -17,7 +17,9 @@ export default class Snippets extends Component {
             placement: null,
             author: null, 
             intervalIsSet: false,
+            newMode: false
         };
+        this.new = this.new.bind(this);
     }
     // when component mounts, first thing it does is fetch all existing data in our db
     // then we incorporate a polling logic so that we can easily see if our db has
@@ -47,7 +49,20 @@ export default class Snippets extends Component {
         .then((res) => this.setState({ data: res.data }));
     };
 
+    new = () => {
+        this.setState((state) => ({ 
+            newMode: !state.newMode
+        }))
+    }
     render() {
+        if (this.state.newMode){
+            return (
+                <React.Fragment>
+                <NewSnippet onSubmit={this.new} currentIds={this.state.data.map((data) => data.id)}/>
+                <button onClick={() => this.new()}>Cancel</button>
+                </React.Fragment>
+                )
+        }else{
             return (
                 <div className="snippets">
                     <h1>Snippets</h1>
@@ -58,9 +73,10 @@ export default class Snippets extends Component {
                             <Snippet data={dat}/>
                         ))}
                     </ul>
-                    <NewSnippet currentIds={this.state.data.map((data) => data.id)}/>
+                    <button onClick={() => this.new()}>New</button>
                 </div>
             )
+        }
     }
 }
 

@@ -17,25 +17,26 @@ import axios from 'axios'
   }
   // our put method that uses our backend api
   // to create new query into our data base
-  let addSnippet = (snip) => {
-    axios.post('/api/putSnippet', {
-        id: snip.id,
-        title: snip.title,
-        description: snip.description,
-        tags: snip.tags,
-        jscode: snip.jscode,
-        csscode: snip.csscode,
-        placement: snip.placement,
-        author: snip.author 
-    })
-    .then(
-      (response => {
-        console.log(response)
-      })
-    )
-    .catch(error => {
-      console.log(error.response)
-    })
+  let addSnippet = async (snip) => {
+    try {
+      const response = await new Promise (function (resolve, reject) {
+        resolve(axios.post('/api/putSnippet', {
+          id: snip.id,
+          title: snip.title,
+          description: snip.description,
+          tags: snip.tags,
+          jscode: snip.jscode,
+          csscode: snip.csscode,
+          placement: snip.placement,
+          author: snip.author 
+      }))})
+      console.log(response)
+      return(response)
+    }
+    catch(err){
+      console.log(err.response)
+      return(err)
+    }
   };
 
       // update method that uses our backend api

@@ -13,8 +13,8 @@ export default class Editor extends Component {
         theme: 'github',          //  ''	String	theme to use
         value: this.props.value || '',          //  ''	String	value you want to populate in the code highlighter
         defaultValue: '',   //  ''	String	Default value of the editor
-        height: '40vh',         //  '500px'	String	CSS value for height
-        width: '50%',          //	'500px'	String	CSS value for width
+        height: '50vh',         //  '500px'	String	CSS value for height
+        width: '100%',          //	'500px'	String	CSS value for width
         className: '',      //   String	custom className
         fontSize: 12,       //	12	Number	pixel value for font-size
         showGutter: true,     //	true	Boolean	show gutter
@@ -34,7 +34,7 @@ export default class Editor extends Component {
             enableLiveAutocompletion: false,
             enableSnippets: false,
             showLineNumbers: true,
-            tabSize: 2,
+            tabSize: 2
         }, //		Object	options to apply directly to the Ace editor instance
         keyboardHandler: '', //		String	corresponding to the keybinding mode to set (such as vim or emacs)
         commands: '', //		Array	new commands to add to the editor
@@ -63,7 +63,7 @@ export default class Editor extends Component {
             setOptions={this.state.setOptions}
             readOnly={this.state.readOnly}
             height={this.state.height}
-            width={this.state.width}/>          
+            width={this.state.width}/>  
         )
     }
 }
