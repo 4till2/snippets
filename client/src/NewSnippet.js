@@ -4,7 +4,7 @@ import Client from './Client'
 import Editor from './Editor'
 import TagsInput from './TagsInput'
 import Placement from './Placement'
-import { Form, Col, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 export default class NewSnippet extends Component {
     constructor(props){
@@ -52,7 +52,7 @@ export default class NewSnippet extends Component {
         (response => {
           if (response.data.success === true){
               console.log("Success");
-              this.props.onSubmit()
+              this.props.toggleNew()
           }
           else{
               console.log("Failure")
@@ -65,54 +65,69 @@ export default class NewSnippet extends Component {
 }
 
     render() {
-        return (
-            <div className="new-snippet">
-                <h2>NewSnippet</h2>
-                <span>Title: </span>
-                <input
+        return ( 
+        <div className="new-snippet mx-auto px-3">
+            <h2>New Snippet</h2>
+            <Row className="snippet-title">
+                <Col xs={1}><h3>Title:</h3></Col>
+                <Col>
+                    <input
                     type="text"
                     onChange={(e) => this.setState({ title: e.target.value })}
                     placeholder="Short and to the point"
-                    style={{ width: '200px' }}
-                />
-                <span>Description: </span>
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ description: e.target.value })}
-                    placeholder="What do we need to know about this snippet? When / How do we use it? Be descriptive."
-                    style={{ width: '200px' }}
-                /> 
-                <span>Tags: </span>
-                <TagsInput update={this.updateTags}/>
-                <div className="editors" style={{ width:'100%', display: 'inline-flex'}}>
-                    <span>JS: </span>
-                    <Editor 
-                        update={this.updateCode}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Col lg={5}className="snippet-info">
+                    <Row className="snippet-tags">
+                        <Col xs={2}><h3>Tags:</h3></Col>
+                        <Col><TagsInput update={this.updateTags}/></Col>
+                    </Row>
+                    <Row className="h-75 snippet-description">
+                        <textarea
+                        type="text"
+                        onChange={(e) => this.setState({ description: e.target.value })}
+                        placeholder="What do we need to know about this snippet? When / How do we use it? Be descriptive."
+                        />
+                    </Row>
+                    <Row className="snippet-meta w-100">
+                        <Col className="snippet-placement">
+                            <h6>Placement:</h6>
+                            <Placement handleChange={(e) => this.setState({ placement: e })} />
+                        </Col>
+                        <Col className="snippet-author">
+                        <h6>Author:</h6>
+                            <input
+                                type="text"
+                                onChange={(e) => this.setState({ author: e.target.value })}
+                                placeholder="Who are you?"
+                            /> 
+                        </Col>
+                    </Row>
+                </Col>
+                <Col lg={7} className="snippet-code">
+                    <h6>Javascript</h6>
+                    <Editor
+                        update={this.updateCode} 
                         mode='javascript'
                         readOnly={false}
-                        value=''
                     />
-                    <span>CSS:</span>
+                    <h6>Css</h6>
                     <Editor 
                         update={this.updateCode}
                         mode='css'
                         readOnly={false}
-                        value=''
-                    />
-                </div>
-                <span>Placement: </span>
-                <Placement handleChange={(e) => this.setState({ placement: e })} />
-                <span>Author: </span>
-                <input
-                    type="text"
-                    onChange={(e) => this.setState({ author: e.target.value })}
-                    placeholder="Who are you?"
-                    style={{ width: '200px' }}
-                />                   
-                <button onClick={() => this.submit(this.state)}>
-                    ADD
-                </button>
-            </div>
+                    />  
+                </Col>
+            </Row>
+            <button onClick={() => this.props.toggleNew()}>
+                CANCEL
+            </button>                  
+            <button onClick={() => this.submit(this.state)}>
+                SUBMIT
+            </button>
+        </div>
         )
     }
 }

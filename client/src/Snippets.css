@@ -1,0 +1,48 @@
+li{
+    margin-bottom: 10px;
+    list-style: none;
+    padding: 10px;
+}
+.snippet{
+    border: 1px solid;
+}
+.edit-snippet{
+    border: 1px solid rgb(228, 119, 92);
+}
+.new-snippet{
+    padding: 10px;
+    border: 1px solid blueviolet;
+    margin-top: 30px;
+}
+.snippet-title {
+    text-align: left;
+}
+.snippet-tag{
+    padding: 5px;
+    margin-right: 5px;
+    background-color: bisque;
+    border-radius: 4px;
+}
+.snippet-description{
+    padding: 5px;
+    background-color: rgba(255, 255, 241, 0.623);
+    text-align: left;
+    overflow: auto;
+}
+.snippet-description textarea{
+    font-size: 1.2rem;
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+}
+.snippet-meta{
+    padding: 5px;
+    background-color: aliceblue;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+}
+button{
+    margin: 10px;
+}

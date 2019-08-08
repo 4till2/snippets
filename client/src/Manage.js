@@ -13,7 +13,7 @@ export default class Manage extends Component {
     }
     confirmEdit(){
         var confirm = prompt("Enter the passcode to edit");
-        if (confirm == 'iamahuman'){
+        if (confirm == 'edit'){
             this.props.edit()
         }
     }

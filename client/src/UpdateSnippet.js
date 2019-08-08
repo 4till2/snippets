@@ -3,6 +3,7 @@ import Client from './Client'
 import Editor from './Editor'
 import TagsInput from './TagsInput'
 import Placement from './Placement'
+import {Col, Row} from 'react-bootstrap'
 
 export default class UpdateSnippet extends Component {
     constructor(props){
@@ -44,52 +45,72 @@ export default class UpdateSnippet extends Component {
 
     render() {
         return (
-        <div className="updateSnippet" style={{ padding: '10px', border: '2px solid' }}>
-            <h2>Update Snippet</h2>
-            <span>Title</span>
-            <input
+            <div className="mx-auto px-3">
+            <Row className="snippet-title">
+            <Col xs={1}><h3>Title:</h3></Col>
+            <Col>
+                <input 
                     type="text"
                     onChange={(e) => this.setState({ title: e.target.value })}
-                    defaultValue={this.props.data.title} 
-                    style={{ width: '200px' }}
+                    defaultValue={this.props.data.title}
                 />
-                <span>Description</span>
-            <input
-                type="text"
-                onChange={(e) => this.setState({ description: e.target.value })}
-                defaultValue={this.props.data.description} 
-                style={{ width: '200px' }}
-            /> 
-            <span>Tags</span>
-            <TagsInput update={this.updateTags} tags={this.state.tags}/>
-            <div className="editors" style={{ width:'100%', display: 'inline-flex'}}>
-                <Editor 
-                    update={this.updateCode}
-                    mode='javascript'
-                    readOnly={false}
-                    value={this.props.data.jscode}
-                />
-                <Editor 
-                    update={this.updateCode}
-                    mode='css'
-                    readOnly={false}
-                    value={this.props.data.csscode}
-                />
-            </div>
-            <span>Placement</span>
-            <Placement value={this.props.data.placement} handleChange={(e) => this.setState({ placement: e })} />
-            <span>Author</span>
-            <input
-                type="text"
-                onChange={(e) => this.setState({ author: e.target.value })}
-                defaultValue={this.props.data.author}
-                style={{ width: '200px' }}
-            /> 
+            </Col>
+            </Row>
+            <Row>
+                <Col lg={5}className="snippet-info">
+                    <Row className="snippet-tags">
+                        <Col xs={2}><h3>Tags:</h3></Col>
+                        <Col><TagsInput update={this.updateTags} tags={this.state.tags}/></Col>
+                    </Row>
+                    <Row className="h-75 snippet-description">
+                        <textarea
+                        style={textAreaStyle}
+                        type="text"
+                        onChange={(e) => this.setState({ description: e.target.value })}
+                        defaultValue={this.props.data.description}
+                        />
+                    </Row>
+                    <Row className="snippet-meta w-100">
+                        <Col className="snippet-placement">
+                            <h6>Placement:</h6>
+                            <Placement value={this.props.data.placement} handleChange={(e) => this.setState({ placement: e })} />
+                        </Col>
+                        <Col className="snippet-author">
+                            <h6>Author:</h6>
+                            <input
+                                type="text"
+                                onChange={(e) => this.setState({ author: e.target.value })}
+                                defaultValue={this.props.data.author}
+                            /> 
+                        </Col>
+                        <Col className="snippet-date">
+                        <h6>Updated At:</h6>
+                            {new Date(this.props.data.updatedAt).toLocaleString()}
+                        </Col>
+                    </Row>
+                </Col>
+                <Col lg={7} className="snippet-code">
+                    <h6>Javascript</h6>
+                    <Editor
+                        update={this.updateCode} 
+                        mode='javascript'
+                        readOnly={false}
+                        value={this.props.data.jscode}
+                    />
+                    <h6>Css</h6>
+                    <Editor 
+                        update={this.updateCode}
+                        mode='css'
+                        readOnly={false}
+                        value={this.props.data.csscode}
+                    />  
+                </Col>
+            </Row>
             <button onClick={() => this.props.edit()}>
                 CANCEL
             </button>                  
             <button onClick={() => this.submit(this.state)}>
-                UPDATE
+                SUBMIT
             </button>
         </div>
         )
@@ -98,4 +119,8 @@ export default class UpdateSnippet extends Component {
 
 const style = {
     border: '2px solid'
+}
+const textAreaStyle = {
+    width: '100%',
+    resize: 'none'
 }

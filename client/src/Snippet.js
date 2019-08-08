@@ -42,28 +42,35 @@ export default class Snippet extends Component {
                                 {this.props.data.tags.map((e) => <span className="snippet-tag">{e.label}</span>)}
                             </Row>
                             <Row className="h-75 snippet-description">
-                                <p> {this.props.data.description} </p>
+                                <textarea
+                                 type="text"
+                                 defaultValue={this.props.data.description}
+                                 readOnly="true"
+                                 />
                             </Row>
                             <Row className="snippet-meta w-100">
                                 <Col className="snippet-placment">
+                                    <h6>Placement:</h6>
                                     {placements[this.props.data.placement]}
                                 </Col>
                                 <Col className="snippet-author">
+                                    <h6>Author:</h6>
                                     {this.props.data.author}
                                 </Col>
                                 <Col className="snippet-date">
+                                    <h6>Updated At:</h6>
                                     {new Date(this.props.data.updatedAt).toLocaleString()}
                                 </Col>
                             </Row>
                         </Col>
                         <Col lg={7} className="snippet-code">
-                            <span>Javascript</span>
+                            <h6>Javascript</h6>
                             <Editor 
                                 mode='javascript'
                                 readOnly={true}
                                 value={this.props.data.jscode}
                             />
-                            <span>Css</span>
+                            <h6>Css</h6>
                             <Editor 
                                 mode='css'
                                 readOnly={true}
@@ -77,7 +84,9 @@ export default class Snippet extends Component {
             )   
         }else{  
             return (
-                <UpdateSnippet data={this.props.data} edit={this.edit} />
+                <li className="edit-snippet" key={this.props.data.id}>
+                    <UpdateSnippet data={this.props.data} edit={this.edit} />
+                </li>
             )
         }
     }

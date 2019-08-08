@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Snippet from './Snippet'
 import NewSnippet from './NewSnippet'
 import Client from './Client'
-
+import './Snippets.css'
 export default class Snippets extends Component {
     constructor(props) {
         super(props)
@@ -58,8 +58,7 @@ export default class Snippets extends Component {
         if (this.state.newMode){
             return (
                 <React.Fragment>
-                <NewSnippet onSubmit={this.new} currentIds={this.state.data.map((data) => data.id)}/>
-                <button onClick={() => this.new()}>Cancel</button>
+                <NewSnippet toggleNew={this.new} currentIds={this.state.data.map((data) => data.id)}/>
                 </React.Fragment>
                 )
         }else{
