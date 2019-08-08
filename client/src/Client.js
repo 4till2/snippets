@@ -96,6 +96,20 @@ import axios from 'axios'
       return (err);
     }
   }
+  let addTag = async (tag) => {
+    try {
+      const response = await new Promise (function (resolve, reject) {
+        resolve(axios.post('/api/putTag', {
+          tag: tag 
+      }))})
+      console.log(response)
+      return(response)
+    }
+    catch(err){
+      console.log(err.response)
+      return(err)
+    }
+  };
 
   let deleteTag = (id) => {
     axios.delete('/api/deleteTag', {
@@ -130,6 +144,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag };
+  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag, addTag };
   export default Client;
   

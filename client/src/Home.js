@@ -9,7 +9,7 @@ export default class Home extends Component {
             <div className="mx-auto px-5" style = {style}>
                 <Row>        
                     <Col lg={3}>
-                        
+                        <Sidebar />
                     </Col>
                     <Col lg={9}>
                         <Snippets />

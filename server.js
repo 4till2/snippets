@@ -134,9 +134,23 @@ router.get('/getTags', (req, res) => {
   });
 });
 
+router.post('/putTag', (req, res) => {
+  let data = new Tag();
+  
+  const {tag} = req.body;
+  if (!tag) return res.json({ success: false, error: "Not Valid Tag" })
+  data.value = camelize(tag)
+  data.label = tag;
+
+  data.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+})
+
 router.delete('/deleteTag', (req, res) => {
   const { id } = req.body;
-  Snippet.findByIdAndDelete(id, (err) => {
+  Tag.findByIdAndDelete(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -154,3 +168,11 @@ app.use('/api', router);
 app.listen(app.get("port"), () => {
   console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
 });
+
+
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+    return index == 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+}
