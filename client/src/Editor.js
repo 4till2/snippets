@@ -34,6 +34,7 @@ export default class Editor extends Component {
             enableLiveAutocompletion: false,
             enableSnippets: false,
             showLineNumbers: true,
+            useWorker:false,
             tabSize: 2
         }, //		Object	options to apply directly to the Ace editor instance
         keyboardHandler: '', //		String	corresponding to the keybinding mode to set (such as vim or emacs)
@@ -52,8 +53,8 @@ export default class Editor extends Component {
         return (
             <AceEditor
             placeholder={this.state.placeholder}
-            mode='javascript'
-            theme='github'
+            mode={this.state.mode}
+            theme={this.state.theme}
             onChange={(e) => this.changeValue(e)}
             fontSize={this.state.fontSize}
             showPrintMargin={this.state.showPrintMargin}
@@ -63,7 +64,8 @@ export default class Editor extends Component {
             setOptions={this.state.setOptions}
             readOnly={this.state.readOnly}
             height={this.state.height}
-            width={this.state.width}/>  
+            width={this.state.width}
+            />  
         )
     }
 }
