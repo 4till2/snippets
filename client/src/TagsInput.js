@@ -20,9 +20,8 @@ export default class TagsInput extends Component {
 
     render() {
         return (
-            <div className="tags" style={style}>
+
                 <Select
-                style={{zIndex: '5', width: '100%', height: '5px'}}
                 name="inputTags"
                 isMulti
                 className="basic-multi-select"
@@ -32,11 +31,6 @@ export default class TagsInput extends Component {
                 onChange={(e) => this.props.update(e)}
                 isDisabled={this.props.readOnly || false}
                 />
-            </div>
         );
     }
-}
-
-const style = {
-    zIndex: 5,
 }

@@ -13,7 +13,7 @@ export default class Editor extends Component {
         theme: 'github',          //  ''	String	theme to use
         value: this.props.value || '',          //  ''	String	value you want to populate in the code highlighter
         defaultValue: '',   //  ''	String	Default value of the editor
-        height: '50vh',         //  '500px'	String	CSS value for height
+        height: '200px',         //  '500px'	String	CSS value for height
         width: '100%',          //	'500px'	String	CSS value for width
         className: '',      //   String	custom className
         fontSize: 12,       //	12	Number	pixel value for font-size

@@ -12,9 +12,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-/* div {
-  border: 1px solid black;
-  padding: 5px;
-  margin: 5px;
-} */
+.hidden{
+  display: none;
+}
