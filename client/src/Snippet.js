@@ -45,7 +45,7 @@ export default class Snippet extends Component {
                                 <textarea
                                  type="text"
                                  defaultValue={this.props.data.description}
-                                 readOnly="true"
+                                 readOnly={true}
                                  />
                             </Row>
                             <Row className="snippet-meta w-100">
