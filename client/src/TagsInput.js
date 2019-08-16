@@ -18,9 +18,10 @@ export default class TagsInput extends Component {
         .then(result => {this.setState({data: result.data})})
     }
 
+  
+
     render() {
         return (
-
                 <Select
                 name="inputTags"
                 isMulti

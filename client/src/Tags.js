@@ -17,22 +17,33 @@ export default class Tags extends Component {
     }
     addTag = () => {
         Client.addTag(this.state.value)
-        .then(result => {console.log(result)})
-        document.getElementById('new-tag').innerText = '';
+        .then(result => {
+            console.log(result)
+            document.getElementById('new-tag').value = '';
+        })
+        
     }
-    contextMenu = (e) => {
-        e.preventDefault();
+    handleClick = (e) => {
+        (e.button === 2) ? this.deleteTag(e) : this.toggleFilter(e);
+    }
+    
+    deleteTag = (e) => {
+        e.preventDefault()
         let response = prompt("Do you want to delete this tag? Yes / No");
         if (response.toLowerCase() == 'yes'){
             let id = this.state.data.filter(tag => tag.label == e.target.innerText)[0]._id
             if (id) Client.deleteTag(id)
         }
     }
+    toggleFilter = (e) => {
+        this.props.toggleFilter(e.target.getAttribute('data-value'))
+        e.target.classList.toggle('active');
+    }
     render() {
         return (
             <React.Fragment>
             <div>
-                {Array.from(this.state.data).map((e) => <span className="snippet-tag" onContextMenu={this.contextMenu}>{e.label}</span>)}
+                {Array.from(this.state.data).map((e) => <span className="snippet-tag" data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} >{e.label}</span>)}
             </div>
             <div>
                 <span>Create New</span>

@@ -8,18 +8,8 @@ export default class Snippets extends Component {
         super(props)
         this.state = {
             data: [],
-            id: 0,
-            title: null,
-            description: null,
-            tags: [],
-            jscode: null,
-            csscode: null,
-            placement: null,
-            author: null, 
             intervalIsSet: false,
             newMode: false,
-            sortMode: 'time-new',
-            tagFilters: []
         };
         this.new = this.new.bind(this);
     }
@@ -57,52 +47,43 @@ export default class Snippets extends Component {
         }))
     }
     sort = (data) => {
-        switch (this.state.sortMode){
+        switch (this.props.sortMode || 'title'){
             case 'title':
                 return (data.sort(function(a, b){
                     if (a.title.toUpperCase() > b.title.toUpperCase()) {return 1}
                     if (a.title.toUpperCase() < b.title.toUpperCase()) {return -1}
                     return 0
                 }));
-                break;
-            case 'time-new':
+            case 'new':
                 return (data.sort(function(a, b){
                     if (a.updatedAt > b.updatedAt) {return 1}
                     if (a.updatedAt < b.updatedAt) {return -1}
                     return 0
                 }));
-                break;
-            case 'time-old':
+            case 'old':
                 return (data.sort(function(a, b){
                     if (a.updatedAt < b.updatedAt) {return 1}
                     if (a.updatedAt > b.updatedAt) {return -1}
                     return 0
                 }));
-                break;
             case 'placement':
                 return (data.sort(function(a, b){
                     if (a.placement > b.placement) {return 1}
                     if (a.placement < b.placement) {return -1}
                     return 0
                 }));
-                break;
             case 'author':
                 return (data.sort(function(a, b){
                     if (a.author > b.author) {return 1}
                     if (a.author < b.author) {return -1}
                     return 0
                 }));
-                break;
         }
     }
     
-    checkTagFilter(e){ console.log(e.tags)
-        return (this.state.tagFilters.some((h) => e.tags.indexOf(h) >= 0))
-    }
-
     filter = (data) => {
-        if (this.state.tagFilters.length){
-            return (data.filter((e) => this.checkTagFilter(e)))
+        if (this.props.tagFilters.length){
+            return (data.filter((e) => this.props.tagFilters.some(tag => e.tags.map(e => e.value).includes(tag))))
         }
         return (data)
     }
