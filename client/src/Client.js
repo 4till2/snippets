@@ -129,6 +129,38 @@ import axios from 'axios'
   /*--------------------------------------------------------------- */
   /* END TAGS */
 
+  let addUser = async (user) => {
+    try {
+      const response = await new Promise (function (resolve, reject) {
+        resolve(axios.post('/api/putUser', {
+          name: user.name,
+          email: user.email,
+          password: user.password
+      }))})
+      console.log(response)
+      return(response)
+    }
+    catch(err){
+      console.log(err.response)
+      return(err)
+    }
+  };
+
+  let getUser = async (user) => {
+    try {
+      const data = await new Promise(function (resolve, reject) {
+        resolve(axios.post('/api/getUser',{
+          email: user.email,
+          password: user.password
+        }));
+      });
+      console.log(data)
+      return (data);
+    }
+    catch (err) {
+      return (err);
+    }
+  }
   function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
       return response;
@@ -144,6 +176,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag, addTag };
+  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag, addTag, getUser, addUser };
   export default Client;
   

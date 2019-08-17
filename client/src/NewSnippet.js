@@ -17,7 +17,7 @@ export default class NewSnippet extends Component {
             jscode: null,
             csscode: null,
             placement: null,
-            author: null, 
+            author: this.props.username, 
         };
         this.updateCode = this.updateCode.bind(this);
         this.updateTags = this.updateTags.bind(this);
@@ -88,7 +88,7 @@ export default class NewSnippet extends Component {
                         <textarea
                         type="text"
                         onChange={(e) => this.setState({ description: e.target.value })}
-                        placeholder="What do we need to know about this snippet? When / How do we use it? Be descriptive."
+                        placeholder="This is the description. Here we put lots of nice information about the snippet.&#10;- How to use it.&#10;- When to use it.&#10;- Why to use it.&#10;VARIABLES TO REPLACE:&#10;* variable_a&#10;* variable_b"
                         />
                     </Row>
                     <Row className="snippet-meta w-100">
@@ -98,11 +98,7 @@ export default class NewSnippet extends Component {
                         </Col>
                         <Col className="snippet-author">
                         <h6>Author:</h6>
-                            <input
-                                type="text"
-                                onChange={(e) => this.setState({ author: e.target.value })}
-                                placeholder="Who are you?"
-                            /> 
+                            <span>{this.state.author}</span>
                         </Col>
                     </Row>
                 </Col>

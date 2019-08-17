@@ -11,7 +11,7 @@ export default class Snippets extends Component {
             intervalIsSet: false,
             newMode: false,
         };
-        this.new = this.new.bind(this);
+        this.newSnippet = this.newSnippet.bind(this);
     }
     // when component mounts, first thing it does is fetch all existing data in our db
     // then we incorporate a polling logic so that we can easily see if our db has
@@ -41,12 +41,16 @@ export default class Snippets extends Component {
         .then((res) => this.setState({ data: res.data }));
     };
 
-    new = () => {
-        this.setState((state) => ({ 
-            newMode: !state.newMode
-        }))
+    newSnippet(){
+        if (this.props.username){
+            this.setState((state) => ({ 
+                newMode: !state.newMode
+            }))
+        }else{
+            alert('You must be logged in to create a new snippet')
+        }
     }
-    sort = (data) => {
+    sort(data){
         switch (this.props.sortMode || 'title'){
             case 'title':
                 return (data.sort(function(a, b){
@@ -81,18 +85,29 @@ export default class Snippets extends Component {
         }
     }
     
-    filter = (data) => {
+    filter(data) {
         if (this.props.tagFilters.length){
             return (data.filter((e) => this.props.tagFilters.some(tag => e.tags.map(e => e.value).includes(tag))))
         }
         return (data)
     }
-      
+    search(data){
+        let location = this.props.searchLocation;
+        let term = this.props.searchTerm.toLowerCase();
+        return (data.filter(e => e[location] && e[location].toLowerCase().includes(term)))
+    } 
+    returnSnippets(data){
+        let ret = this.state.data;
+        this.props.searchTerm ? ret = this.search(ret) : '';
+        this.props.tagFilters.length ? ret = this.filter(ret) : '';
+        ret = this.sort(ret);
+        return ret;
+    }
     render() {
         if (this.state.newMode){
             return (
                 <React.Fragment>
-                <NewSnippet toggleNew={this.new} currentIds={this.state.data.map((data) => data.id)}/>
+                <NewSnippet toggleNew={this.newSnippet} currentIds={this.state.data.map((data) => data.id)} username={this.props.username}/>
                 </React.Fragment>
                 )
         }else{
@@ -102,11 +117,11 @@ export default class Snippets extends Component {
                     <ul style={ulStyle}>
                         {this.state.data.length <= 0
                         ? 'NO DB ENTRIES YET'
-                        : this.filter(this.sort(this.state.data)).map((dat) => (
+                        : this.returnSnippets().map(dat => (
                             <Snippet data={dat}/>
                         ))}
                     </ul>
-                    <button onClick={() => this.new()}>New</button>
+                    <button onClick={() => this.newSnippet()}>New</button>
                 </div>
             )
         }

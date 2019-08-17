@@ -6,6 +6,7 @@ const app = express();
 const router = express.Router();
 const Snippet = require('./db/snippet');
 const Tag = require('./db/tag');
+const User = require('./db/users');
 
 app.set("port", process.env.PORT || 3001);
 
@@ -157,6 +158,39 @@ router.delete('/deleteTag', (req, res) => {
 });
 /*--------------------------------------------------------------- */
 /* END TAGS */
+
+/* USER */  
+/*--------------------------------------------------------------- */
+router.post('/getUser', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.json({ success: false, error: "Missing fields"})
+  User.find({email: email, password: password}, (err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.post('/putUser', (req, res) => {
+  let data = new User();
+  
+  const {name, email, password} = req.body;
+  if (!name || !email || !password) return res.json({ success: false, error: "Not Valid" })
+  
+  data.name = name;
+  data.email = email;
+  data.password = password;
+  data.permissions.read = true;
+  data.permissions.write = false;
+  data.permissions.god = false;
+  data.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+})
+
+/*--------------------------------------------------------------- */
+/* END USER */
+
 
 app.get('/', function(req, res) {
   res.sendFile('index.html', {root: './client/public/'});

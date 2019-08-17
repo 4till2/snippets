@@ -4,23 +4,35 @@ import Client from './Client';
 export default class Tags extends Component {
     state = {
         data: {},
-        value: ''
+        intervalIsSet: false
     };
 
     componentDidMount() {
-        this.getTags();
+        this.getTagsFromDb()
+        if (!this.state.intervalIsSet) {
+            let interval = setInterval(this.getTagsFromDb, 1000);
+            this.setState({ intervalIsSet: interval });
+        }
     }
-
-    getTags = () => {
+  
+    componentWillUnmount() {
+        if (this.state.intervalIsSet) {
+        clearInterval(this.state.intervalIsSet);
+        this.setState({ intervalIsSet: null });
+        }
+    }
+    getTagsFromDb = () => {
         Client.getAllTags()
         .then(result => {this.setState({data: result.data})})
     }
     addTag = () => {
-        Client.addTag(this.state.value)
-        .then(result => {
-            console.log(result)
-            document.getElementById('new-tag').value = '';
-        })
+        if (prompt("Password to create Tag?") == 'letmein'){
+            let tag = prompt("New Tag:");
+            Client.addTag(tag)
+            .then(result => {
+                console.log(result)
+            })
+        }
         
     }
     handleClick = (e) => {
@@ -29,8 +41,8 @@ export default class Tags extends Component {
     
     deleteTag = (e) => {
         e.preventDefault()
-        let response = prompt("Do you want to delete this tag? Yes / No");
-        if (response.toLowerCase() == 'yes'){
+        let response = prompt("Password to DELETE this tag:");
+        if (response == 'letmein'){
             let id = this.state.data.filter(tag => tag.label == e.target.innerText)[0]._id
             if (id) Client.deleteTag(id)
         }
@@ -45,16 +57,7 @@ export default class Tags extends Component {
             <div>
                 {Array.from(this.state.data).map((e) => <span className="snippet-tag" data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} >{e.label}</span>)}
             </div>
-            <div>
-                <span>Create New</span>
-                <input
-                    id="new-tag"
-                    type="text"
-                    onChange={(e) => this.setState({ value: e.target.value })}
-                    placeholder="Gimme a snippet"  
-                ></input>
-                <button onClick={() => this.addTag()}>Add</button>
-            </div>
+             <button onClick={() => this.addTag()}>Add</button>
             </React.Fragment>
         )
     }
