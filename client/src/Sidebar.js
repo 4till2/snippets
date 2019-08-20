@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Tags from './Tags'
-import Sort from './Sort'
+// import Sort from './Sort'
 import Search  from './Search';
 
 export default class Sidebar extends Component {
@@ -27,4 +27,19 @@ export default class Sidebar extends Component {
 
 const style = {
 
+}
+export class Sort extends Component {
+    render() {
+        return (
+            <div>
+               <select onChange={e => this.props.changeSort(e.target.value)}>
+                    <option value="title">Title</option>
+                    <option value="new">Newest first</option>
+                    <option value="old">Oldest first</option>
+                    <option value="placement">Placement</option>
+                    <option value="author">Author</option>
+                </select> 
+            </div>
+        )
+    }
 }

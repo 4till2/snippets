@@ -118,7 +118,7 @@ export default class Snippets extends Component {
                         {this.state.data.length <= 0
                         ? 'NO DB ENTRIES YET'
                         : this.returnSnippets().map(dat => (
-                            <Snippet data={dat}/>
+                            <Snippet data={dat} username={this.props.username}/>
                         ))}
                     </ul>
                     <button onClick={() => this.newSnippet()}>New</button>

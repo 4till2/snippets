@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import EditSnippet from './EditSnippet'
 import Client from './Client'
 export default class Manage extends Component {
     constructor(props){

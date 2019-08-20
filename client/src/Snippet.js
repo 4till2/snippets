@@ -1,4 +1,3 @@
-import './Snippet.css'
 import React, { Component } from 'react'
 import Editor from './Editor'
 import Manage from './Manage'
@@ -28,6 +27,10 @@ export default class Snippet extends Component {
     }
 
     render() {
+        let manage = '';
+        if (this.props.username == this.props.data.author){
+            manage = <Manage data={this.props.data} edit={this.edit}/>
+        }
         if (!this.state.editMode) {
             this.tags = this.props.data.tags 
             return ( 
@@ -78,7 +81,7 @@ export default class Snippet extends Component {
                             />  
                         </Col>
                     </Row>
-                    <Manage data={this.props.data} edit={this.edit}/>
+                    {manage}
                     </div>
                 </li>
             )   

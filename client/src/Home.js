@@ -3,6 +3,7 @@ import Sidebar from './Sidebar'
 import Snippets from './Snippets'
 import Nav from './Nav'
 import { Container, Col, Row } from 'react-bootstrap';
+import Client from './Client';
 
 export default class Home extends Component {
     constructor(){
@@ -13,7 +14,7 @@ export default class Home extends Component {
             searchTerm: '',
             searchLocation: 'title',
             username: getCookie('username'),
-            useremail: getCookie('useremail')
+            useremail: getCookie('useremail'),
         }
         this.toggleFilter = this.toggleFilter.bind(this);
         this.changeSort = this.changeSort.bind(this);
@@ -39,8 +40,10 @@ export default class Home extends Component {
     }
     setUser(user){
         this.setState({username: user.name});
-        this.setState({useremail: user.email})
+        this.setState({useremail: user.email});
+        this.setState({userPermissions: user.permissions});
     }
+
     unsetUser(){
         this.setState({username: ''});
         this.setState({useremail: ''})
@@ -57,7 +60,7 @@ export default class Home extends Component {
                         <Sidebar toggleFilter={this.toggleFilter} changeSort={this.changeSort} handleSearchTerm={this.handleSearchTerm} handleSearchLocation={this.handleSearchLocation}/>
                     </Col>
                     <Col lg={9}>
-                        <Snippets sortMode={this.state.sortMode} tagFilters={this.state.tagFilters} searchTerm={this.state.searchTerm} searchLocation={this.state.searchLocation} username={this.state.username}/>
+                        <Snippets {...this.state}/>
                     </Col>
                 </Row>
             </div>

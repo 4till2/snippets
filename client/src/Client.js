@@ -154,8 +154,21 @@ import axios from 'axios'
           password: user.password
         }));
       });
-      console.log(data)
       return (data);
+    }
+    catch (err) {
+      return (err);
+    }
+  }
+
+  let getUserPermissions = async (userEmail) => {
+    try {
+      const data = await new Promise(function (resolve, reject) {
+        resolve(axios.post('/api/getUserPermissions',{
+          email: userEmail,
+        }));
+      });
+      return (data.data.data);
     }
     catch (err) {
       return (err);
@@ -176,6 +189,6 @@ import axios from 'axios'
     return response.json();
   }
   
-  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag, addTag, getUser, addUser };
+  const Client = {getAllSnippets, addSnippet, updateSnippet, deleteSnippet, getAllTags, deleteTag, addTag, getUser, addUser, getUserPermissions };
   export default Client;
   

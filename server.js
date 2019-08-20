@@ -170,12 +170,24 @@ router.post('/getUser', (req, res) => {
   });
 });
 
+router.post('/getUserPermissions', (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.json({ success: false, error: "Missing fields"})
+  User.find({email: email}, (err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data[0].permissions });
+  });
+});
+
 router.post('/putUser', (req, res) => {
   let data = new User();
   
   const {name, email, password} = req.body;
   if (!name || !email || !password) return res.json({ success: false, error: "Not Valid" })
-  
+  // if (User.find({email: email}, (err, data) => {
+  //   if (err || data.length) return true;
+  //   return false;
+  // })) return res.json({ success: false, error: "Not Valid" })
   data.name = name;
   data.email = email;
   data.password = password;

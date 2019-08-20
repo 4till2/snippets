@@ -26,7 +26,7 @@ export default class Login extends Component {
                     let data = response.data.data[0]
                     setCookie('username', data.name, 1);
                     setCookie('useremail', data.email, 1);
-                    this.props.setUser({name: data.name, email: data.email})
+                    this.props.setUser({name: data.name, email: data.email, permissions: data.permissions})
                   }
                   else console.log('Invalid Login')
               }
