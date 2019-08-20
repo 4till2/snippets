@@ -8,6 +8,11 @@ body {
   text-align: center;
   background-color: aliceblue;
 }
+button {
+  background-color: beige;
+  border-radius: 4px;
+  font-weight: 100;
+}
 .nav-bar{
   background-color: #fff;
   top: 0;
@@ -30,6 +35,11 @@ body {
 .snippets-body{
   width: 65%;
   float: right;
+}
+.search-bar{
+  width: 85%;
+  font-size: x-large;
+  box-shadow: inset 0px 0px 2px 3px aliceblue;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

@@ -6,7 +6,7 @@ export default class Search extends Component {
         return (
             <div>
                 <form>
-                    <input onChange={this.props.handleSearchTerm} />
+                    <input className="search-bar" onChange={this.props.handleSearchTerm} />
                     <div onChange={this.props.handleSearchLocation}>
                         <input type="radio" id="searchLocation1" name="location" value="title"/>
                         <label for="searchLocation1">Title</label>
