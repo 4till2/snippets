@@ -20,6 +20,7 @@ export default class Sidebar extends Component {
             <div>
                 <Sort changeSort={this.props.changeSort}/>
             </div>
+            <button style={{"margin-top":"30px", "padding":"10px"}}onClick={() => this.props.newSnippet()}>New Snippet</button>
             </React.Fragment>
         )
     }

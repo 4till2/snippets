@@ -5,6 +5,9 @@ import Nav from './Nav'
 import { Container, Col, Row } from 'react-bootstrap';
 import Client from './Client';
 
+const style = {
+    marginTop: '50px'
+}
 export default class Home extends Component {
     constructor(){
         super();
@@ -15,13 +18,15 @@ export default class Home extends Component {
             searchLocation: 'title',
             username: getCookie('username'),
             useremail: getCookie('useremail'),
+            newMode: false
         }
         this.toggleFilter = this.toggleFilter.bind(this);
         this.changeSort = this.changeSort.bind(this);
         this.handleSearchTerm = this.handleSearchTerm.bind(this);
         this.handleSearchLocation = this.handleSearchLocation.bind(this)
         this.setUser = this.setUser.bind(this);
-        this.unsetUser = this.unsetUser.bind(this)
+        this.unsetUser = this.unsetUser.bind(this);
+        this.newSnippet = this.newSnippet.bind(this);
     }
 
     toggleFilter(tag){
@@ -50,27 +55,32 @@ export default class Home extends Component {
         setCookie('username', '', -1);
         setCookie('useremail', '', -1);
     }
+
+    newSnippet(){
+        if (this.state.username){
+            this.setState((state) => ({ 
+                newMode: !state.newMode
+            }))
+        }else{
+            alert('You must be logged in to create a new snippet')
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
             <Nav username={this.state.username} setUser={this.setUser} unsetUser={this.unsetUser}/>
             <div className="mx-auto px-5" style = {style}>
-                <Row>        
-                    <Col lg={3}>
-                        <Sidebar toggleFilter={this.toggleFilter} changeSort={this.changeSort} handleSearchTerm={this.handleSearchTerm} handleSearchLocation={this.handleSearchLocation}/>
-                    </Col>
-                    <Col lg={9}>
-                        <Snippets {...this.state}/>
-                    </Col>
-                </Row>
+                    <div className="side-bar">
+                        <Sidebar toggleFilter={this.toggleFilter} changeSort={this.changeSort} handleSearchTerm={this.handleSearchTerm} handleSearchLocation={this.handleSearchLocation} newSnippet={this.newSnippet}/>
+                    </div>
+                    <div className="snippets-body">
+                        <Snippets {...this.state} toggleNew={this.newSnippet}/>
+                    </div>
             </div>
             </React.Fragment>
         )
     }
-}
-
-const style = {
-    // height: '100vh'
 }
 
 function getCookie(cname) {

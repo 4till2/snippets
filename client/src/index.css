@@ -6,8 +6,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: aliceblue;
 }
+.nav-bar{
+  background-color: #fff;
+  top: 0;
+  box-shadow: 0 2px 10px -1px rgba(176,192,237,.22);
 
+}
+.snippet{
+  background-color: rgb(255, 255, 255)
+}
+.side-bar{
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  height: 80%;
+  width: 25%;
+  float: left;
+  position: fixed;
+  box-shadow: 0 2px 10px -1px rgba(176,192,237,.22);
+
+}
+.snippets-body{
+  width: 65%;
+  float: right;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

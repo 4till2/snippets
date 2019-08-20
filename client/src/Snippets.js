@@ -9,9 +9,7 @@ export default class Snippets extends Component {
         this.state = {
             data: [],
             intervalIsSet: false,
-            newMode: false,
         };
-        this.newSnippet = this.newSnippet.bind(this);
     }
     // when component mounts, first thing it does is fetch all existing data in our db
     // then we incorporate a polling logic so that we can easily see if our db has
@@ -41,15 +39,6 @@ export default class Snippets extends Component {
         .then((res) => this.setState({ data: res.data }));
     };
 
-    newSnippet(){
-        if (this.props.username){
-            this.setState((state) => ({ 
-                newMode: !state.newMode
-            }))
-        }else{
-            alert('You must be logged in to create a new snippet')
-        }
-    }
     sort(data){
         switch (this.props.sortMode || 'title'){
             case 'title':
@@ -60,14 +49,14 @@ export default class Snippets extends Component {
                 }));
             case 'new':
                 return (data.sort(function(a, b){
-                    if (a.updatedAt > b.updatedAt) {return 1}
-                    if (a.updatedAt < b.updatedAt) {return -1}
+                    if (a.updatedAt < b.updatedAt) {return 1}
+                    if (a.updatedAt > b.updatedAt) {return -1}
                     return 0
                 }));
             case 'old':
                 return (data.sort(function(a, b){
-                    if (a.updatedAt < b.updatedAt) {return 1}
-                    if (a.updatedAt > b.updatedAt) {return -1}
+                    if (a.updatedAt > b.updatedAt) {return 1}
+                    if (a.updatedAt < b.updatedAt) {return -1}
                     return 0
                 }));
             case 'placement':
@@ -104,16 +93,15 @@ export default class Snippets extends Component {
         return ret;
     }
     render() {
-        if (this.state.newMode){
+        if (this.props.newMode){
             return (
                 <React.Fragment>
-                <NewSnippet toggleNew={this.newSnippet} currentIds={this.state.data.map((data) => data.id)} username={this.props.username}/>
+                <NewSnippet toggleNew={this.props.toggleNew} currentIds={this.state.data.map((data) => data.id)} username={this.props.username}/>
                 </React.Fragment>
                 )
         }else{
             return (
                 <div className="snippets">
-                    <h1>Snippets</h1>
                     <ul style={ulStyle}>
                         {this.state.data.length <= 0
                         ? 'NO DB ENTRIES YET'
@@ -121,7 +109,6 @@ export default class Snippets extends Component {
                             <Snippet data={dat} username={this.props.username}/>
                         ))}
                     </ul>
-                    <button onClick={() => this.newSnippet()}>New</button>
                 </div>
             )
         }

@@ -5,22 +5,17 @@ export default class Manage extends Component {
         super(props);
     }
     confirmDelete(){
-        var confirm = prompt("Enter the super secret passcode to delete!");
-        if (confirm == 'iamagod'){
+        var confirm = prompt("Enter DELETE to delete!");
+        if (confirm == 'DELETE'){
              Client.deleteSnippet(this.props.data._id)
         }
     }
-    confirmEdit(){
-        var confirm = prompt("Enter the passcode to edit");
-        if (confirm == 'letmein'){
-            this.props.edit()
-        }
-    }
+
     render() {
         return (   
             <div className = "manage" style={style}>
                 <button onClick={() => this.confirmDelete() }>DELETE</button>
-                <button onClick={() => this.confirmEdit()}>EDIT</button>
+                <button onClick={() => this.props.edit()}>EDIT</button>
             </div>
         )
     }

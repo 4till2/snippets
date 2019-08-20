@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Client from './Client';
+import './Login.css'
 
 export default class Login extends Component {
     constructor(props){
@@ -69,30 +70,31 @@ export default class Login extends Component {
     render() {
         if (this.state.newAccount){
             return(
-                <div>
+                <React.Fragment>
                     <form onSubmit={this.createUser}>
                         <label for="uname"><b>Name</b></label>
-                        <input type="text" placeholder="Yosef" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
+                        <input type="text" placeholder="Name" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
                         <label for="email"><b>Email</b></label>
                         <input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
                         <label for="password"><b>Password</b></label>
                         <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
-                        <button type="submit" value="Submit">Submit</button>
+                        <button class="main-button" type="submit" value="Submit">Submit</button>
+                        <button class="sub-button" onClick={this.toggleNewAccount}>Login instead</button>
                     </form>
-                    <button onClick={this.toggleNewAccount}>Login instead</button>
-                </div>
+                </React.Fragment>
         )}else{
             return (
-                <div>
+                <React.Fragment>
                     <form onSubmit={this.login}>
                         <label for="email"><b>Email</b></label>
                         <input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
                         <label for="password"><b>Password</b></label>
                         <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
-                        <button type="submit" value="Submit">Submit</button>
+                        <button class="main-button" type="submit" value="Submit">Submit</button>
+                        <button class="sub-button" onClick={this.toggleNewAccount}>Create Account Instead</button>
                     </form>
-                    <button onClick={this.toggleNewAccount}>Create Account</button>
-                </div>
+                    
+                </React.Fragment>
             )
         }
     }
