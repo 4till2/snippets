@@ -18,7 +18,7 @@ console.log(process.env.NODE_ENV)
 
 // this is our MongoDB database
 const dbRoute =
-  'mongodb+srv://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@cluster0-jvgsl.mongodb.net/AB-SNIPPETS?retryWrites=true&w=majority';
+  'mongodb+srv://admin:Absnippets42@cluster0-jvgsl.mongodb.net/AB-SNIPPETS?retryWrites=true&w=majority';
 
 // connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
