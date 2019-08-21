@@ -79,7 +79,7 @@ export default class Login extends Component {
                         <label for="password"><b>Password</b></label>
                         <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
                         <button class="main-button" type="submit" value="Submit">Submit</button>
-                        <button class="sub-button" onClick={this.toggleNewAccount}>Login instead</button>
+                        <button class="sub-button" onClick={this.toggleNewAccount}>Login</button>
                     </form>
                 </React.Fragment>
         )}else{
@@ -90,8 +90,8 @@ export default class Login extends Component {
                         <input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
                         <label for="password"><b>Password</b></label>
                         <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
-                        <button class="main-button" type="submit" value="Submit">Submit</button>
-                        <button class="sub-button" onClick={this.toggleNewAccount}>Create Account Instead</button>
+                        <button class="main-button" type="submit" value="Submit">Login</button>
+                        <button class="sub-button" onClick={this.toggleNewAccount}>Create new account</button>
                     </form>
                     
                 </React.Fragment>

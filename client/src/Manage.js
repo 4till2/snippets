@@ -14,7 +14,7 @@ export default class Manage extends Component {
     render() {
         return (   
             <div className = "manage" style={style}>
-                <button onClick={() => this.confirmDelete() }>DELETE</button>
+                <button class="warning" onClick={() => this.confirmDelete() }>DELETE</button>
                 <button onClick={() => this.props.edit()}>EDIT</button>
             </div>
         )

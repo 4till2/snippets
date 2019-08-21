@@ -21,9 +21,13 @@ li{
 .snippet-tag{
     padding: 5px 10px;
     margin: 5px;
-    background-color: bisque;
+    background-color: #fffaf0;
     border-radius: 20px;
     display: inline-block;
+    cursor: inherit;
+}
+.side-bar .snippet-tag{
+    cursor: crosshair;
 }
 .snippet-tag.active {
     background-color: rgb(218, 255, 196);
