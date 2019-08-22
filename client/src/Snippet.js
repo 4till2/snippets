@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 import Editor from './Editor'
 import Manage from './Manage'
 import UpdateSnippet from './UpdateSnippet';
-import {placements} from './global';
 import {Row, Col} from 'react-bootstrap'
 
+let placements = {
+    "account-global": 'Account Global',
+    "test-global": "Test Global",
+    "variation-custom": "Variation Custom Code",
+    "test-targeting": "Test Custom Targeting"
+}
 export default class Snippet extends Component {
     constructor(props){
         super(props);

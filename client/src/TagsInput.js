@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Client from './Client';
+import Client from './global/client';
 import Select from 'react-select';
 
 export default class TagsInput extends Component {

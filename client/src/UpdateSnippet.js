@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Client from './Client'
+import Client from './global/client'
 import Editor from './Editor'
 import TagsInput from './TagsInput'
 import Placement from './Placement'

@@ -1,13 +1,47 @@
 import React, { Component } from 'react'
-import Sidebar from './Sidebar'
+import styled from 'styled-components';
+
 import Snippets from './Snippets'
 import Nav from './Nav'
-import { Container, Col, Row } from 'react-bootstrap';
-import Client from './Client';
+import {Button, Title, Container} from './global/styles';
+import Tags from './Tags'
+import {getCookie, setCookie} from './global/helpers'
 
-const style = {
-    marginTop: '50px'
-}
+const MainBody = styled.div `
+    margin: 50px auto;
+    padding: 0 3rem 0 3rem;
+`;
+
+const SideBar = styled.div `
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    height: 80%;
+    width: 25%;
+    float: left;    
+    box-shadow: 0 2px 10px -1px rgba(176,192,237,.22);
+`;
+
+const MainContent = styled.div `
+    width: 65%;
+    float: right;
+`;
+
+const SearchBar = styled.input `
+    width: 85%;
+    font-size: x-large;
+    outline: none;
+    box-shadow: 0 0 2px 2px aliceblue;
+    border: none;
+
+    :focus{
+        box-shadow: 0 0 2px 2px rgb(182, 216, 247);
+      }
+`;
+
+const Label = styled.label `
+      margin: 10px;
+`
+
 export default class Home extends Component {
     constructor(){
         super();
@@ -70,37 +104,61 @@ export default class Home extends Component {
         return (
             <React.Fragment>
             <Nav username={this.state.username} setUser={this.setUser} unsetUser={this.unsetUser}/>
-            <div className="mx-auto px-5" style = {style}>
-                    <div className="side-bar">
-                        <Sidebar toggleFilter={this.toggleFilter} changeSort={this.changeSort} handleSearchTerm={this.handleSearchTerm} handleSearchLocation={this.handleSearchLocation} newSnippet={this.newSnippet}/>
-                    </div>
-                    <div className="snippets-body">
+            <MainBody>
+                    <SideBar>
+                        <Container>
+                            <Title>Search</Title>
+                            <Search handleSearchTerm={this.handleSearchTerm} handleSearchLocation={this.handleSearchLocation} />
+                        </Container>
+                        <Container>
+                            <Title>Filter</Title>
+                            <Tags toggleFilter={this.toggleFilter}/>
+                        </Container>
+                        <Container>
+                            <Title>Sort</Title>
+                            <Sort changeSort={this.changeSort}/>
+                        </Container>
+                        <Button onClick={() => this.newSnippet()}>New Snippet</Button>
+                    </SideBar>
+                    <MainContent>
                         <Snippets {...this.state} toggleNew={this.newSnippet}/>
-                    </div>
-            </div>
+                    </MainContent>
+            </MainBody>
             </React.Fragment>
         )
     }
 }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+class Sort extends Component {
+    render() {
+        return (
+            <select onChange={e => this.props.changeSort(e.target.value)}>
+                <option value="title">Title</option>
+                <option value="new">Newest first</option>
+                <option value="old">Oldest first</option>
+                <option value="placement">Placement</option>
+                <option value="author">Author</option>
+            </select> 
+        )
     }
-    return "";
-  }
+}
 
-  function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
+class Search extends Component {
+    render() {
+        return (
+            <form>
+                <SearchBar onChange={this.props.handleSearchTerm} />
+                <div onChange={this.props.handleSearchLocation}>
+                    <input type="radio" id="searchLocation1" name="location" value="title"/>
+                    <Label for="searchLocation1">Title</Label>
+                    <input type="radio" id="searchLocation2" name="location" value="description"/>
+                    <Label for="searchLocation2">Description</Label>
+                    <input type="radio" id="searchLocation3" name="location" value="jscode"/>
+                    <Label for="searchLocation3">Javascript</Label>
+                    <input type="radio" id="searchLocation4" name="location" value="csscode"/>
+                    <Label for="searchLocation4">CSS</Label>
+                </div>
+            </form>
+        )
+    }
+}

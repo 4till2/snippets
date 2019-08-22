@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Snippet from './Snippet'
 import NewSnippet from './NewSnippet'
-import Client from './Client'
+import Client from './global/client'
 import './Snippets.css'
 export default class Snippets extends Component {
     constructor(props) {

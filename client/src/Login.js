@@ -1,7 +1,31 @@
 import React, { Component } from 'react'
-import Client from './Client';
-import './Login.css'
+import styled from 'styled-components'
 
+import {Button, Input} from './global/styles'
+import {getCookie, setCookie} from './global/helpers'
+import Client from './global/client';
+
+const MainButton = styled(Button) `
+    margin-top: 10px;
+    font-size: x-large;
+    width: 25%;
+    font-weight: bold;
+`;
+
+const SubButton = styled(Button) `
+    float: right;
+    margin-top: 10px;
+    font-size: x-large;
+`;
+
+const Label = styled.label `
+    font-weight: 600;
+    font-size: large;
+    margin-right: 15px;
+    ::after{
+        content: ":";
+    }
+`;
 export default class Login extends Component {
     constructor(props){
         super(props);
@@ -29,7 +53,7 @@ export default class Login extends Component {
                     setCookie('useremail', data.email, 1);
                     this.props.setUser({name: data.name, email: data.email, permissions: data.permissions})
                   }
-                  else console.log('Invalid Login')
+                  else alert('Invalid Login')
               }
               else{
                   console.log("Failure")
@@ -63,46 +87,44 @@ export default class Login extends Component {
             console.log(error)
           })
     }
+
     toggleNewAccount = () => {
-        let fact = !this.state.newAccount
-        this.setState({newAccount: fact})
+        let toggled = !this.state.newAccount
+        this.setState({newAccount: toggled})
     }
+
+    getForm(){
+        let returnForm = this.state.newAccount ?
+        <React.Fragment>
+            <form onSubmit={this.createUser}>
+                <Label for="uname">Name</Label>
+                <Input type="text" placeholder="Name" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
+                <Label for="email">Email</Label>
+                <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
+                <Label for="password">Password</Label>
+                <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
+                <MainButton type="submit" value="Submit">Submit</MainButton>
+                <SubButton onClick={this.toggleNewAccount}>Login</SubButton>
+            </form>
+        </React.Fragment>
+        :
+        <React.Fragment>
+            <form onSubmit={this.login}>
+                <Label for="email">Email</Label>
+                <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
+                <Label for="password">Password</Label>
+                <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
+                <MainButton type="submit" value="Submit">Login</MainButton>
+                <SubButton onClick={this.toggleNewAccount}>Create new account</SubButton>
+            </form>
+        </React.Fragment>
+
+        return returnForm;
+    }
+
     render() {
-        if (this.state.newAccount){
-            return(
-                <React.Fragment>
-                    <form onSubmit={this.createUser}>
-                        <label for="uname"><b>Name</b></label>
-                        <input type="text" placeholder="Name" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
-                        <label for="email"><b>Email</b></label>
-                        <input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                        <label for="password"><b>Password</b></label>
-                        <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
-                        <button class="main-button" type="submit" value="Submit">Submit</button>
-                        <button class="sub-button" onClick={this.toggleNewAccount}>Login</button>
-                    </form>
-                </React.Fragment>
-        )}else{
-            return (
-                <React.Fragment>
-                    <form onSubmit={this.login}>
-                        <label for="email"><b>Email</b></label>
-                        <input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                        <label for="password"><b>Password</b></label>
-                        <input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
-                        <button class="main-button" type="submit" value="Submit">Login</button>
-                        <button class="sub-button" onClick={this.toggleNewAccount}>Create new account</button>
-                    </form>
-                    
-                </React.Fragment>
-            )
-        }
+        return(
+            this.getForm()
+        )
     }
 }
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }

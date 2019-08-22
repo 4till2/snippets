@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Client from './Client'
+import Client from './global/client'
 export default class Manage extends Component {
     constructor(props){
         super(props);

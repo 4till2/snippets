@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Client from './Client';
+import Client from './global/client';
 
 export default class Tags extends Component {
     state = {
@@ -26,14 +26,11 @@ export default class Tags extends Component {
         .then(result => {this.setState({data: result.data})})
     }
     addTag = () => {
-        if (prompt("Password to create Tag?") == 'letmein'){
-            let tag = prompt("New Tag:");
-            Client.addTag(tag)
-            .then(result => {
-                console.log(result)
-            })
-        }
-        
+        let tag = prompt("New Tag:");
+        Client.addTag(tag)
+        .then(result => {
+            console.log(result)
+        }) 
     }
     handleClick = (e) => {
         (e.button === 2) ? this.deleteTag(e) : this.toggleFilter(e);
@@ -56,8 +53,8 @@ export default class Tags extends Component {
             <React.Fragment>
             <div>
                 {Array.from(this.state.data).map((e) => <span className="snippet-tag" data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} >{e.label}</span>)}
+                <button onClick={() => this.addTag()}>Add</button>
             </div>
-             <button onClick={() => this.addTag()}>Add</button>
             </React.Fragment>
         )
     }
