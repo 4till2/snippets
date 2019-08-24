@@ -9,10 +9,6 @@ body {
   background-color: aliceblue;
 }
 
-.snippet{
-  background-color: rgb(255, 255, 255)
-}
-
 .snippets-body{
   width: 65%;
   float: right;

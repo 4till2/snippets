@@ -97,11 +97,11 @@ export default class Login extends Component {
         let returnForm = this.state.newAccount ?
         <React.Fragment>
             <form onSubmit={this.createUser}>
-                <Label for="uname">Name</Label>
+                <Label htmlFor="uname">Name</Label>
                 <Input type="text" placeholder="Name" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
-                <Label for="email">Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                <Label for="password">Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
                 <MainButton type="submit" value="Submit">Submit</MainButton>
                 <SubButton onClick={this.toggleNewAccount}>Login</SubButton>
@@ -110,9 +110,9 @@ export default class Login extends Component {
         :
         <React.Fragment>
             <form onSubmit={this.login}>
-                <Label for="email">Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                <Label for="password">Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
                 <MainButton type="submit" value="Submit">Login</MainButton>
                 <SubButton onClick={this.toggleNewAccount}>Create new account</SubButton>

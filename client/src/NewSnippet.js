@@ -9,7 +9,6 @@ export default class NewSnippet extends Component {
     constructor(props){
         super(props)
         this.state = {
-            id: 0,
             title: null,
             description: null,
             tags: [],
@@ -31,37 +30,30 @@ export default class NewSnippet extends Component {
     }
 
     submit = (snip) => {
-    let currentIds = this.props.currentIds;
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-        ++idToBeAdded;
-    }
-
-    Client.addSnippet({
-        id: idToBeAdded,
-        title: snip.title,
-        description: snip.description,
-        tags: snip.tags,
-        jscode: snip.jscode,
-        csscode: snip.csscode,
-        placement: snip.placement,
-        author: snip.author 
-    })
-    .then(
-        (response => {
-          if (response.data.success === true){
-              console.log("Success");
-              this.props.toggleNew()
-          }
-          else{
-              console.log("Failure")
-          }
+        Client.addSnippet({
+            title: snip.title,
+            description: snip.description,
+            tags: snip.tags,
+            jscode: snip.jscode,
+            csscode: snip.csscode,
+            placement: snip.placement,
+            author: snip.author 
         })
-      )
-      .catch(error => {
-        console.log(error)
-      })
-}
+        .then(
+            (response => {
+            if (response.data.success === true){
+                console.log("Success");
+                this.props.toggleNew()
+            }
+            else{
+                console.log("Failure")
+            }
+            })
+        )
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
     render() {
         return ( 

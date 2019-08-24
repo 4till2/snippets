@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Snippet from './Snippet'
-import NewSnippet from './NewSnippet'
 import Client from './global/client'
+import {sortObject, sortObjectFunc, toUpper} from './global/helpers'
+
 import './Snippets.css'
+
+let OrderedList = styled.ol `
+    margin: 0;
+    padding: 0;
+`;
+
+
 export default class Snippets extends Component {
     constructor(props) {
         super(props)
@@ -39,83 +48,47 @@ export default class Snippets extends Component {
         .then((res) => this.setState({ data: res.data }));
     };
 
-    sort(data){
-        switch (this.props.sortMode || 'title'){
+    sortSnippets(data, sortMode = 'title'){
+        switch (sortMode){
             case 'title':
-                return (data.sort(function(a, b){
-                    if (a.title.toUpperCase() > b.title.toUpperCase()) {return 1}
-                    if (a.title.toUpperCase() < b.title.toUpperCase()) {return -1}
-                    return 0
-                }));
+                return sortObjectFunc(data, "title", toUpper);
             case 'new':
-                return (data.sort(function(a, b){
-                    if (a.updatedAt < b.updatedAt) {return 1}
-                    if (a.updatedAt > b.updatedAt) {return -1}
-                    return 0
-                }));
+                return sortObject(data, "updatedAt").reverse();
             case 'old':
-                return (data.sort(function(a, b){
-                    if (a.updatedAt > b.updatedAt) {return 1}
-                    if (a.updatedAt < b.updatedAt) {return -1}
-                    return 0
-                }));
+                return sortObject(data, "updatedAt");
             case 'placement':
-                return (data.sort(function(a, b){
-                    if (a.placement > b.placement) {return 1}
-                    if (a.placement < b.placement) {return -1}
-                    return 0
-                }));
+                return sortObjectFunc(data, "placement", toUpper);
             case 'author':
-                return (data.sort(function(a, b){
-                    if (a.author > b.author) {return 1}
-                    if (a.author < b.author) {return -1}
-                    return 0
-                }));
+                return sortObjectFunc(data, "author", toUpper);
         }
     }
     
-    filter(data) {
-        if (this.props.tagFilters.length){
-            return (data.filter((e) => this.props.tagFilters.some(tag => e.tags.map(e => e.value).includes(tag))))
-        }
-        return (data)
+    filterSnippet(data, tagFilters) {
+        if (data && tagFilters.length) return (data.filter((e) => tagFilters.some(tag => e.tags.map(e => e.value).includes(tag))))
+        return data || null
     }
-    search(data){
-        let location = this.props.searchLocation;
-        let term = this.props.searchTerm.toLowerCase();
-        return (data.filter(e => e[location] && e[location].toLowerCase().includes(term)))
+
+    searchSnippet(data, term, location = 'title'){
+        console.log(location)
+        if (data && term && location) return (data.filter(e => e[location] && e[location].toLowerCase().includes(term.toLowerCase())))
+        return data || null
     } 
-    returnSnippets(data){
-        let ret = this.state.data;
-        this.props.searchTerm ? ret = this.search(ret) : '';
-        this.props.tagFilters.length ? ret = this.filter(ret) : '';
-        ret = this.sort(ret);
+    
+    handleSnippets(data){
+        let ret = data;
+        this.props.searchTerm ? ret = this.searchSnippet(ret, this.props.searchTerm, this.props.searchLocation) : '';
+        this.props.tagFilters.length ? ret = this.filterSnippet(ret, this.props.tagFilters) : '';
+        ret = this.sortSnippets(ret, this.props.sortMode);
         return ret;
     }
     render() {
-        if (this.props.newMode){
-            return (
-                <React.Fragment>
-                <NewSnippet toggleNew={this.props.toggleNew} currentIds={this.state.data.map((data) => data.id)} username={this.props.username}/>
-                </React.Fragment>
-                )
-        }else{
-            return (
-                <div className="snippets">
-                    <ul style={ulStyle}>
-                        {this.state.data.length <= 0
-                        ? 'NO DB ENTRIES YET'
-                        : this.returnSnippets().map(dat => (
-                            <Snippet data={dat} username={this.props.username}/>
-                        ))}
-                    </ul>
-                </div>
-            )
-        }
+        let snippetsBody = this.state.data.length <= 0
+        ?   'NO SNIPPETS AVAILABLE'
+        :   <OrderedList>
+                {this.handleSnippets(this.state.data).map(dat => (
+                    <Snippet data={dat} username={this.props.username}/>
+                ))}
+            </OrderedList>;
+        return (snippetsBody)
     }
-}
-
-const ulStyle = {
-    margin: '0',
-    padding: '0'
 }

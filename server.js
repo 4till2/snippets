@@ -93,7 +93,6 @@ router.post('/putSnippet', (req, res) => {
   let data = new Snippet();
   
   const   {
-    id,
     title,
     description,
     tags,
@@ -102,14 +101,13 @@ router.post('/putSnippet', (req, res) => {
     placement,
     author 
   } = req.body;
-  if ((!id && id !== 0) || !title || !description || !tags || (!jscode && !csscode) || !author) {
+  if (!title || !description || !tags || (!jscode && !csscode) || !author) {
     console.log('Invalid Inputs')
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
     });
   }
-  data.id = id;
   data.title = title;
   data.description = description;
   data.tags = tags;

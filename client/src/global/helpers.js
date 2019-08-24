@@ -1,3 +1,5 @@
+import { stringify } from "querystring";
+
 export function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -18,4 +20,26 @@ export function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+export function sortObjectFunc(object, key, func, reverse = false) {
+    if (!object || !key || !func) return null
+    return (object.sort(function(a, b){
+        if (func(a[key]) > func(b[key])) {return 1}
+        if (func(a[key]) < func(b[key])) {return -1}
+        return 0
+    }));
+}
+
+export function sortObject(object, key) {
+    if (!object || !key) return null
+    return (object.sort(function(a, b){
+        if ((a[key]) > (b[key])) {return 1}
+        if ((a[key]) < (b[key])) {return -1}
+        return 0
+    }));
+}
+
+export function toUpper(s){
+    return s.toUpperCase()
 }

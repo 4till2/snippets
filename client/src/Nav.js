@@ -22,7 +22,7 @@ const LogButton = styled(Button) `
 `;
 
 
-const NavBar = styled.div `
+const NavBar = styled.nav `
     width: 100%;
     padding: 0 3rem;
     height: 85px;
@@ -44,7 +44,7 @@ export default class Nav extends Component {
                 <Profile>
                     <span>{this.props.username}</span>
                 </Profile>
-                <LogButton  onClick={this.props.unsetUser}>Logout</LogButton>
+                <LogButton onClick={this.props.unsetUser}>Logout</LogButton>
             </React.Fragment>
         :
            <Login setUser={this.props.setUser}/>

@@ -21,7 +21,6 @@ import axios from 'axios'
     try {
       const response = await new Promise (function (resolve, reject) {
         resolve(axios.post('/api/putSnippet', {
-          id: snip.id,
           title: snip.title,
           description: snip.description,
           tags: snip.tags,

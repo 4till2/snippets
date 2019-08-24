@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import NewSnippet from './NewSnippet'
 
 import Snippets from './Snippets'
 import Nav from './Nav'
@@ -7,7 +8,7 @@ import {Button, Title, Container} from './global/styles';
 import Tags from './Tags'
 import {getCookie, setCookie} from './global/helpers'
 
-const MainBody = styled.div `
+const MainBody = styled.main `
     margin: 50px auto;
     padding: 0 3rem 0 3rem;
 `;
@@ -46,7 +47,7 @@ export default class Home extends Component {
     constructor(){
         super();
         this.state = {
-            sortMode: '',
+            sortMode: 'title',
             tagFilters: [],
             searchTerm: '',
             searchLocation: 'title',
@@ -60,7 +61,7 @@ export default class Home extends Component {
         this.handleSearchLocation = this.handleSearchLocation.bind(this)
         this.setUser = this.setUser.bind(this);
         this.unsetUser = this.unsetUser.bind(this);
-        this.newSnippet = this.newSnippet.bind(this);
+        this.toggleNewSnippet = this.toggleNewSnippet.bind(this);
     }
 
     toggleFilter(tag){
@@ -90,7 +91,7 @@ export default class Home extends Component {
         setCookie('useremail', '', -1);
     }
 
-    newSnippet(){
+    toggleNewSnippet(){
         if (this.state.username){
             this.setState((state) => ({ 
                 newMode: !state.newMode
@@ -118,10 +119,12 @@ export default class Home extends Component {
                             <Title>Sort</Title>
                             <Sort changeSort={this.changeSort}/>
                         </Container>
-                        <Button onClick={() => this.newSnippet()}>New Snippet</Button>
+                        <Button onClick={() => this.toggleNewSnippet()}>New Snippet</Button>
                     </SideBar>
                     <MainContent>
-                        <Snippets {...this.state} toggleNew={this.newSnippet}/>
+                        {this.state.newMode 
+                        ?   <NewSnippet toggleNew={this.toggleNewSnippet} username={this.state.username}/> 
+                        :   <Snippets {...this.state} toggleNew={this.toggleNewSnippet}/>}
                     </MainContent>
             </MainBody>
             </React.Fragment>
@@ -150,13 +153,13 @@ class Search extends Component {
                 <SearchBar onChange={this.props.handleSearchTerm} />
                 <div onChange={this.props.handleSearchLocation}>
                     <input type="radio" id="searchLocation1" name="location" value="title"/>
-                    <Label for="searchLocation1">Title</Label>
+                    <Label htmlFor="searchLocation1">Title</Label>
                     <input type="radio" id="searchLocation2" name="location" value="description"/>
-                    <Label for="searchLocation2">Description</Label>
+                    <Label htmlFor="searchLocation2">Description</Label>
                     <input type="radio" id="searchLocation3" name="location" value="jscode"/>
-                    <Label for="searchLocation3">Javascript</Label>
+                    <Label htmlFor="searchLocation3">Javascript</Label>
                     <input type="radio" id="searchLocation4" name="location" value="csscode"/>
-                    <Label for="searchLocation4">CSS</Label>
+                    <Label htmlFor="searchLocation4">CSS</Label>
                 </div>
             </form>
         )
