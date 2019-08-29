@@ -33,3 +33,17 @@ export const Input = styled.input `
         box-shadow: 0 0 2px 2px rgb(182, 216, 247);
     } 
 `;
+
+export const SnippetTag = styled.span `
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #fffaf0;
+    border-radius: 20px;
+    display: inline-block;
+    cursor: ${props => props.selectable ? 'crosshair' : 'inherit'}
+    user-select: ${props => props.selectable ? 'none' : 'inherit'}
+
+    &.active {
+        background-color: rgb(218, 255, 196);
+    }
+`;

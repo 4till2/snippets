@@ -8,15 +8,12 @@ body {
   text-align: center;
   background-color: aliceblue;
 }
-
-.snippets-body{
-  width: 65%;
-  float: right;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.basic-multi-select{
+  width: 100%;
 }
 .hidden{
   display: none;

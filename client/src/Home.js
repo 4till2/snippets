@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import NewSnippet from './NewSnippet'
-
-import Snippets from './Snippets'
+import NewSnippet from './Snippets/NewSnippet'
+import Snippets from './Snippets/Snippets'
 import Nav from './Nav'
 import {Button, Title, Container} from './global/styles';
 import Tags from './Tags'

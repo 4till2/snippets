@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Client from './global/client';
+import { SnippetTag } from './global/styles';
 
 export default class Tags extends Component {
     state = {
@@ -52,7 +53,7 @@ export default class Tags extends Component {
         return (
             <React.Fragment>
             <div>
-                {Array.from(this.state.data).map((e) => <span className="snippet-tag" data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} >{e.label}</span>)}
+                {Array.from(this.state.data).map((e) => <SnippetTag data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} selectable >{e.label}</SnippetTag>)}
                 <button onClick={() => this.addTag()}>Add</button>
             </div>
             </React.Fragment>

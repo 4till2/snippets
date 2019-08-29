@@ -29,7 +29,7 @@ export default class TagsInput extends Component {
                 classNamePrefix="select"
                 defaultValue={this.props.tags || ''}
                 options={this.state.data}
-                onChange={(e) => this.props.update(e)}
+                onChange={(e) => this.props.update('tags', e)}
                 isDisabled={this.props.readOnly || false}
                 />
         );

@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Snippet from './Snippet'
-import Client from './global/client'
-import {sortObject, sortObjectFunc, toUpper} from './global/helpers'
-
-import './Snippets.css'
+import Client from '../global/client'
+import {sortObject, sortObjectFunc, toUpper} from '../global/helpers'
 
 let OrderedList = styled.ol `
     margin: 0;
     padding: 0;
 `;
-
 
 export default class Snippets extends Component {
     constructor(props) {
