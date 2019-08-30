@@ -5,7 +5,7 @@ export const Button = styled.button`
     border: 1px solid #fffaf0; 
     border-radius: 4px;
     font-weight: 300;
-    padding: 15px;
+    padding: ${props => props.padding || ""};
     margin: ${props => props.margin || 0};
     color: ${props => props.danger ? "#f74c4c" : props.warning ? "#f78b4c" : "" };
     
@@ -23,8 +23,7 @@ export const Container = styled.div `
 `;
 
 export const Input = styled.input `
-    padding: 15px;
-    margin: 10px;
+    padding: 10px;
     box-shadow: 0 0 13px 1px aliceblue;
     border: none;
     outline: none;

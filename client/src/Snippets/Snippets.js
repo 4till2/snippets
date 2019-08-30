@@ -57,6 +57,8 @@ export default class Snippets extends Component {
                 return sortObjectFunc(data, "placement", toUpper);
             case 'author':
                 return sortObjectFunc(data, "author", toUpper);
+            default :
+                return sortObjectFunc(data, "title", toUpper);
         }
     }
     
@@ -66,15 +68,14 @@ export default class Snippets extends Component {
     }
 
     searchSnippet(data, term, location = 'title'){
-        console.log(location)
         if (data && term && location) return (data.filter(e => e[location] && e[location].toLowerCase().includes(term.toLowerCase())))
         return data || null
     } 
     
     handleSnippets(data){
         let ret = data;
-        this.props.searchTerm ? ret = this.searchSnippet(ret, this.props.searchTerm, this.props.searchLocation) : '';
-        this.props.tagFilters.length ? ret = this.filterSnippet(ret, this.props.tagFilters) : '';
+        ret = this.props.searchTerm ? this.searchSnippet(ret, this.props.searchTerm, this.props.searchLocation) : ret;
+        ret = this.props.tagFilters.length ? this.filterSnippet(ret, this.props.tagFilters) : ret;
         ret = this.sortSnippets(ret, this.props.sortMode);
         return ret;
     }
@@ -83,7 +84,7 @@ export default class Snippets extends Component {
         ?   'NO SNIPPETS AVAILABLE'
         :   <OrderedList>
                 {this.handleSnippets(this.state.data).map(dat => (
-                    <Snippet data={dat} username={this.props.username}/>
+                    <Snippet key={dat._id} data={dat} username={this.props.username}/>
                 ))}
             </OrderedList>;
         return (snippetsBody)

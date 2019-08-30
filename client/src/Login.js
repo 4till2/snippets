@@ -2,30 +2,30 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import {Button, Input} from './global/styles'
-import {getCookie, setCookie} from './global/helpers'
+import {setCookie} from './global/helpers'
 import Client from './global/client';
 
 const MainButton = styled(Button) `
-    margin-top: 10px;
     font-size: x-large;
-    width: 25%;
-    font-weight: bold;
+    
+    float: right;
+    width: 100%;
+    grid-column-start: 4;
 `;
 
 const SubButton = styled(Button) `
-    float: right;
-    margin-top: 10px;
     font-size: x-large;
+    grid-column-start: c1;
 `;
 
-const Label = styled.label `
-    font-weight: 600;
-    font-size: large;
-    margin-right: 15px;
-    ::after{
-        content: ":";
-    }
-`;
+const Form = styled.form `
+    grid-column-start: c2;
+    display: inline-grid;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: 100%;
+    align-items: center;
+    grid-column-gap: 10px;
+`
 export default class Login extends Component {
     constructor(props){
         super(props);
@@ -96,27 +96,22 @@ export default class Login extends Component {
     getForm(){
         let returnForm = this.state.newAccount ?
         <React.Fragment>
-            <form onSubmit={this.createUser}>
-                <Label htmlFor="uname">Name</Label>
+            <SubButton onClick={this.toggleNewAccount}>Login</SubButton>
+            <Form onSubmit={this.createUser}>
                 <Input type="text" placeholder="Name" name="uname" required onChange={e => this.setState({name: e.target.value})}/>
-                <Label htmlFor="email">Email</Label>
-                <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                <Label htmlFor="password">Password</Label>
-                <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
+                <Input type="email" placeholder="Email" name="email" required onChange={e => this.setState({email: e.target.value})}/>
+                <Input type="password" placeholder="Password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
                 <MainButton type="submit" value="Submit">Submit</MainButton>
-                <SubButton onClick={this.toggleNewAccount}>Login</SubButton>
-            </form>
+            </Form>
         </React.Fragment>
         :
         <React.Fragment>
-            <form onSubmit={this.login}>
-                <Label htmlFor="email">Email</Label>
-                <Input type="email" placeholder="user@abtasty.com" name="email" required onChange={e => this.setState({email: e.target.value})}/>
-                <Label htmlFor="password">Password</Label>
-                <Input type="password" placeholder="password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
+            <SubButton onClick={this.toggleNewAccount}>Create new account</SubButton>
+            <Form onSubmit={this.login}>
+                <Input type="email" placeholder="Email" name="email" required onChange={e => this.setState({email: e.target.value})}/>
+                <Input type="password" placeholder="Password" name="password" required onChange={e => this.setState({password: e.target.value})}/>
                 <MainButton type="submit" value="Submit">Login</MainButton>
-                <SubButton onClick={this.toggleNewAccount}>Create new account</SubButton>
-            </form>
+            </Form>
         </React.Fragment>
 
         return returnForm;

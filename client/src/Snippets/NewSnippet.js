@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import AceEditor from 'react-ace';
-import * as editor from '../global/editor'
+
+import Editor from '../global/editor'
 import Manage from './Manage'
 import TagsInput from '../TagsInput'
 import Placement from '../Placement'
 import {Row, Col} from 'react-bootstrap'
-import {SnippetTag, Input} from '../global/styles'
-import {Body, Description, DescriptionText, Meta, Snip, Title, placements} from './styles'
+import {Input} from '../global/styles'
+import {Body, Description, DescriptionText, Meta, Snip} from './styles'
 import Client from '../global/client'
 
 export default class NewSnippet extends Component {
@@ -21,12 +21,7 @@ export default class NewSnippet extends Component {
             placement: "",
             author: this.props.username, 
         };
-        this.updateCode = this.updateCode.bind(this);
         this.updateState = this.updateState.bind(this);
-    }
-    
-    updateCode = (code, update) => {
-        this.setState({[code] : update})
     }
 
     updateState = (target, value) => {
@@ -75,41 +70,11 @@ export default class NewSnippet extends Component {
             
             let placement = <Placement handleChange={(e) => this.setState({ placement: e })} />
             
-            let jsCode =    <AceEditor
-                        placeholder="Place Javascript here"
-                        mode="javascript"
-                        theme={editor.theme}
-                        onChange={(e) => this.setState({ jscode: e })}
-                        fontSize={editor.fontSize}
-                        showPrintMargin={this.state.showPrintMargin}
-                        showGutter={editor.showGutter}
-                        highlightActiveLine={editor.highlightActiveLine}
-                        setOptions={editor.setOptions}
-                        value={this.state.jscode || ""}
-                        readOnly={false}
-                        height={editor.height}
-                        width={editor.width}
-                        />
-            let cssCode =    <AceEditor
-                        placeholder="Place CSS here"
-                        mode="css"
-                        theme={editor.theme}
-                        onChange={(e) => this.setState({ csscode: e })}
-                        fontSize={editor.fontSize}
-                        showPrintMargin={this.state.showPrintMargin}
-                        showGutter={editor.showGutter}
-                        highlightActiveLine={editor.highlightActiveLine}
-                        setOptions={editor.setOptions}
-                        value={this.state.csscode || ""}
-                        readOnly={false}
-                        height={editor.height}
-                        width={editor.width}
-                        /> 
             let manage = <Manage data={this.state} cancel={this.props.toggleNew} submit={this.submit} mode={"new"}/>
     
             
             let body =   <Body>
-                            <Col lg={5}>
+                            <Col lg={6}>
                                 <Row> {tags} </Row>
                                 <Description> {description} </Description>
                                 <Meta>
@@ -117,17 +82,31 @@ export default class NewSnippet extends Component {
                                     <Col> <h6>Author:</h6> {this.props.username} </Col>
                                 </Meta>
                             </Col>
-                            <Col lg={7}>
+                            <Col lg={6}>
                                 <h4>Javascript</h4>
-                                {jsCode}
+                                <Editor
+                                    id={"jsCode-new"}
+                                    placeholder="Place Javascript code here"
+                                    mode="javascript"
+                                    handleChange={this.updateState}
+                                    value={this.state.jscode || ""}
+                                    readOnly={false}
+                                />
                                 <h4>Css</h4>
-                                {cssCode} 
+                                <Editor
+                                    id={"cssCode-new"}
+                                    placeholder="Place Css here"
+                                    mode="css"
+                                    handleChange={this.updateState}
+                                    value={this.state.csscode || ""}
+                                    readOnly={false}
+                                />
                             </Col>
                             {manage}
                         </Body>
             
             return(  
-            <Snip >
+            <Snip mode="new">
                 <span>Title: </span> 
                 {title}
                 {body}

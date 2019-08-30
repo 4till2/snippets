@@ -15,7 +15,12 @@ export const Snip = styled.li `
     padding: .5rem 2rem;
     margin-bottom: 10px;
     list-style: none;
-    border: ${props => props.edit ? '3px solid rgb(255, 196, 196' : ''};
+    border: ${props => props.mode == "edit" 
+        ? '3px solid rgb(255, 196, 196)' 
+        : props.mode === 'new'
+            ?  '3px solid rgb(193, 255, 186)'
+            : ''
+        };
 `;
 
 export const Title = styled.h1 `
@@ -33,6 +38,7 @@ export const Body = styled.div `
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
+    height: 100%;
 `
 
 export const Description = styled(Row) `
@@ -48,6 +54,7 @@ export const DescriptionText = styled.textarea `
     resize: none;
     border: none;
     outline: none;
+    height: 350px;
 `
 
 export const Meta = styled(Row) `

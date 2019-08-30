@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Client from './global/client';
-import { SnippetTag } from './global/styles';
+import { SnippetTag, Button } from './global/styles';
 
 export default class Tags extends Component {
     state = {
@@ -40,8 +40,8 @@ export default class Tags extends Component {
     deleteTag = (e) => {
         e.preventDefault()
         let response = prompt("Password to DELETE this tag:");
-        if (response == 'letmein'){
-            let id = this.state.data.filter(tag => tag.label == e.target.innerText)[0]._id
+        if (response === 'letmein'){
+            let id = this.state.data.filter(tag => tag.label === e.target.innerText)[0]._id
             if (id) Client.deleteTag(id)
         }
     }
@@ -53,8 +53,8 @@ export default class Tags extends Component {
         return (
             <React.Fragment>
             <div>
-                {Array.from(this.state.data).map((e) => <SnippetTag data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} selectable >{e.label}</SnippetTag>)}
-                <button onClick={() => this.addTag()}>Add</button>
+                {Array.from(this.state.data).map((e) => <SnippetTag key={e._id} data-value={e.value} onClick={this.handleClick} onContextMenu={this.deleteTag} selectable >{e.label}</SnippetTag>)}
+                <Button onClick={() => this.addTag()} margin="5px">Add</Button>
             </div>
             </React.Fragment>
         )

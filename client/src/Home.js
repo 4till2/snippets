@@ -65,7 +65,7 @@ export default class Home extends Component {
 
     toggleFilter(tag){
         let update = [...this.state.tagFilters]
-        update.includes(tag) ? update = update.filter(e => e != tag) : update.push(tag)
+        update.includes(tag) ? update = update.filter(e => e !== tag) : update.push(tag)
         this.setState({tagFilters: update})
     }
     changeSort(sort){
@@ -118,7 +118,7 @@ export default class Home extends Component {
                             <Title>Sort</Title>
                             <Sort changeSort={this.changeSort}/>
                         </Container>
-                        <Button onClick={() => this.toggleNewSnippet()}>New Snippet</Button>
+                        <Button onClick={() => this.toggleNewSnippet()} padding="15px">New Snippet</Button>
                     </SideBar>
                     <MainContent>
                         {this.state.newMode 

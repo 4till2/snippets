@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Client from '../global/client'
+import {Button} from '../global/styles'
 
 const ManageContainer = styled.div `
-    display: inline-flex;
+    display: inline-grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    grid-column-gap: 16px;
+    margin: 10px auto 0;
 `
 export default class Manage extends Component {
-    constructor(props){
-        super(props);
-    }
 
     update = (snip) => {
         Client.updateSnippet({
@@ -30,23 +32,26 @@ export default class Manage extends Component {
             case "edit":
                 manage = 
                 <ManageContainer>
-                <button onClick={() => this.props.edit('active', false)}>CANCEL</button>                  
-                <button onClick={() => this.props.submit()}>SUBMIT</button>
+                    <Button onClick={() => this.props.edit('editMode', false)}>CANCEL</Button>                  
+                    <Button onClick={() => this.props.submit()} warning>SUBMIT</Button>
                 </ManageContainer>
                 break;
             case "new":
                 manage = 
                 <ManageContainer>
-                    <button onClick={() => this.props.cancel()}> CANCEL </button>                  
-                    <button onClick={() => this.props.submit()}> SUBMIT </button>
+                    <Button onClick={() => this.props.cancel()}> CANCEL </Button>                  
+                    <Button onClick={() => this.props.submit()} warning> SUBMIT </Button>
                 </ManageContainer>
                 break;
             case "admin":
                 manage =
                 <ManageContainer>
-                    <button class="warning" onClick={() => this.props.delete() }>DELETE</button>
-                    <button onClick={() => this.props.edit('active', true)}>EDIT</button>
+                    <Button onClick={() => this.props.delete() } danger>DELETE</Button>
+                    <Button onClick={() => this.props.edit('editMode', true)} warning>EDIT</Button>
                 </ManageContainer>
+                break;
+            default :
+                manage = ""
         }
         return (
             manage
