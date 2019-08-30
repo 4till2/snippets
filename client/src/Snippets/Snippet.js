@@ -96,7 +96,7 @@ export default class Snippet extends Component {
             ?   <DescriptionText
                 type="text"
                 defaultValue={this.props.data.description}
-                onChange={(e) => this.setState({ description: e.target.value })}
+                onChange={(e) => this.updateData("description", e.target.value)}
                 readOnly={false}
                 />
             :   <DescriptionText
