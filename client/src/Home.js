@@ -42,6 +42,10 @@ const Label = styled.label `
       margin: 10px;
 `
 
+const Docs = styled.a `
+    margin-top: 20px;
+`
+
 export default class Home extends Component {
     constructor(){
         super();
@@ -119,6 +123,8 @@ export default class Home extends Component {
                             <Sort changeSort={this.changeSort}/>
                         </Container>
                         <Button onClick={() => this.toggleNewSnippet()} padding="15px">New Snippet</Button>
+                        <br></br>
+                        <Docs href="/readme.html">Docs</Docs>
                     </SideBar>
                     <MainContent>
                         {this.state.newMode 
