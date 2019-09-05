@@ -5,7 +5,7 @@
 # CONTRIBUTING
 - Fork the project, clone locally, and install dependencies.
 
-`git clone https://github.com/yserkez/snippets.git snippets-file && \
+`git clone https://github.com/yserkez/snippets.git snippets-file &&
  cd snippets-file && npm install && cd client && npm install && cd ..`
 
 - Create an upstream remote and sync your local copy before you branch.
