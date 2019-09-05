@@ -2,9 +2,26 @@
 ## A database of flexible code snippets, with easy search, filter, and creation capabilities.
 
 
+# CONTRIBUTING
+- Fork the project, clone locally, and install dependencies.
+
+`git clone https://github.com/yserkez/snippets.git snippets-file && \
+ cd snippets-file && npm install && cd client && npm install && cd ..`
+
+- Create an upstream remote and sync your local copy before you branch.
+- Branch for each separate piece of work.
+- Do the work, write good commit messages.
+- Push to your origin repository.
+- Create a new PR in GitHub.
+- Respond to any code review feedback.
+
+For more detailed guidance look at this article:
+(https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/)
+
+# USAGE
+
 ## Finding and using a Snippet
 
-### USAGE
 Upon finding the snippet required read through its description to understand how to use it properly. All snippets stored here will be dynamic enough that they can be used on any account with minimal customization. Identify the variables need to be replaced in the description and change them after copying and pasting.
 
 As a general rule all snippets uploaded should declare any dynamic variables as constants at the top of the snippet as such: `const VARIABLE = "CHANGE_ME"`.
