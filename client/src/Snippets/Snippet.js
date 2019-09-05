@@ -116,7 +116,7 @@ export default class Snippet extends Component {
         let body = this.state.isHidden 
         ?   ""
         :   <Body>
-                <Col lg={6}>
+                <Col lg={4}>
                     <Row> {tags} </Row>
                     <Description> {description} </Description>
                     <Meta>
@@ -125,7 +125,7 @@ export default class Snippet extends Component {
                         <Col> <h6>Updated At:</h6> {new Date(this.props.data.updatedAt).toLocaleString()} </Col>
                     </Meta>
                 </Col>
-                <Col lg={6}>
+                <Col lg={8}>
                     <h4>Javascript 
                         {/* <Copy onClick={copyStringToClipboard(this.state.data.jscode)}></Copy> */}
                     </h4>

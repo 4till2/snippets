@@ -21,6 +21,11 @@ export const Snip = styled.li `
             ?  '3px solid rgb(193, 255, 186)'
             : ''
         };
+        transition: transform .2s  ease-in-out;
+    :hover{
+        transform: scale(1.02);
+        cursor: pointer;
+    }
 `;
 
 export const Title = styled.h1 `
@@ -44,7 +49,6 @@ export const Body = styled.div `
 export const Description = styled(Row) `
     height: 75%;
     padding: 5px;
-    background-color: rgba(255, 255, 241, 0.623);
     text-align: left;
     overflow: auto;
 `
@@ -54,7 +58,7 @@ export const DescriptionText = styled.textarea `
     resize: none;
     border: none;
     outline: none;
-    height: 350px;
+    height: 84%;
 `
 
 export const Meta = styled(Row) `
