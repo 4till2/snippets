@@ -12,7 +12,7 @@
 - Branch for each separate piece of work.
 - Do the work, write good commit messages.
 - Push to your origin repository.
-- Create a new PR in GitHub.
+- Create a new Pull Request in GitHub.
 - Respond to any code review feedback.
 
 For more detailed guidance look at this article:
@@ -39,7 +39,7 @@ Use sort to browse Snippets in a more orderly fashion.
 
 
 ## Creating a new Snippet
-If you are logged in with creation rights you will be able to create new Snippets. The idea is for anybody to easily reuse any snippet with minimal customization. To acquire this it is important to create the snippet in such a way that all use-case specific variables (ie. selectors) be easily accessible, and well documented. Refer to the below protocols to learn how to make this possible.
+If you are logged in with creation rights you will be able to create new Snippets. The idea is for anybody to easily reuse any snippet with minimal customization. To acquire this it is important to create the snippet in such a way that all use-case specific variables (ie. selectors) be easily accessible, and well documented. Refer to the below protocols to learn how to make this possible. ALL SNIPPETS ARE TO BE IN ENGLISH.
 
 #### Title:
 Create a short and descriptive title that summarizes what the snippet does.
